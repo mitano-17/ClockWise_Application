@@ -6,12 +6,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import androidx.core.view.ViewCompat;
+
 public class dashboard_viewholder extends RecyclerView.ViewHolder{
 
     //Grab the views from our item_layout file
     TextView courseTv;
     TextView dayTv;
     TextView timeTv;
+    View rootView;
 
     public dashboard_viewholder(@NonNull View itemView) {
         super(itemView);
@@ -19,5 +22,7 @@ public class dashboard_viewholder extends RecyclerView.ViewHolder{
         courseTv = itemView.findViewById(R.id.courseTv);
         dayTv = itemView.findViewById(R.id.dayTv);
         timeTv = itemView.findViewById(R.id.timeTv);
+        rootView = itemView;
+
     }
 }
