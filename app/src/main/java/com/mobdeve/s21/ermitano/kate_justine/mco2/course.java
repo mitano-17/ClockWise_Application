@@ -4,11 +4,13 @@ public class course {
     private String courseTitle;
     private String courseDay;
     private String courseTime;
+    private String colour;
 
-    public course(String courseTitle, String courseDay, String courseTime) {
+    public course(String courseTitle, String courseDay, String courseTime, String colour) {
         this.courseTitle = courseTitle;
         this.courseDay = courseDay;
         this.courseTime = courseTime;
+        this.colour = colour;
     }
 
     public String getCourseTitle() {
@@ -21,5 +23,9 @@ public class course {
 
     public String getCourseTime() {
         return this.courseTime;
+    }
+
+    public String getCourseColour() {
+        return this.colour;
     }
 }
