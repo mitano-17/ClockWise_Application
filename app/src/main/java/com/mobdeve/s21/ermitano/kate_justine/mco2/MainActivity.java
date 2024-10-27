@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
 
+
+
         // register button
         Button registerActivity = findViewById(R.id.SignUpBtn);
         registerActivity.setOnClickListener(new View.OnClickListener() {

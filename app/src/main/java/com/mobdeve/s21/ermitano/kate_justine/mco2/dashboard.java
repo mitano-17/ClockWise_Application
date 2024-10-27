@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -31,9 +32,7 @@ public class dashboard extends AppCompatActivity {
         // set greeting with full name
         TextView textView = findViewById(R.id.nameGreetTv);
         String name = getIntent().getStringExtra("NameGreeting");
-
         textView.setText(name);
-
         // set layout recycler view
         eventsRecycler = findViewById(R.id.EventsRv);
         eventsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
@@ -45,6 +44,8 @@ public class dashboard extends AppCompatActivity {
         myAdapter = new dashboard_adapter(this, courseList);
         eventsRecycler.setAdapter(myAdapter);
 
+
+
         Button createBtn = findViewById(R.id.createEventBtn);
         createBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,13 +55,16 @@ public class dashboard extends AppCompatActivity {
             }
         });
 
-        Button joinBtn = findViewById(R.id.joinEventBtn);
-        joinBtn.setOnClickListener(new View.OnClickListener() {
+        ImageView profileBtn = findViewById(R.id.userTop);
+        profileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(dashboard.this, joinEventqr.class);
+                Intent intent = new Intent(dashboard.this, profile.class);
                 startActivity(intent);
             }
         });
+
+
+
     }
 }

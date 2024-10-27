@@ -20,6 +20,7 @@
         <item>@font/lexend_medium</item>
     </array>
     <color name="black">#FF000000</color>
+    <color name="blue">#007aff</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">MCO2</string>
     <style name="Base.Theme.MCO2" parent="Theme.Material3.DayNight.NoActionBar">

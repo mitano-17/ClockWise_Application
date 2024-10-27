@@ -31,6 +31,10 @@
         <activity android:name=".viewEvent" android:exported="true" />
         <activity android:name=".enterEventqr" android:exported="true" />
 
+        <activity android:name=".profile" android:exported="true" />
+        <activity android:name=".report" android:exported="true" />
+        <activity android:name=".attendance" android:exported="true" />
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

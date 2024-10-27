@@ -1,8 +1,10 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -29,11 +31,24 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder
     public void onBindViewHolder(@NonNull dashboard_viewholder holder, int position) {
         course currentCourse = course.get(position);
 
-        holder.courseTv.setText(course.get(position).getCourseTitle());
-        holder.dayTv.setText(course.get(position).getCourseDay());
-        holder.timeTv.setText(course.get(position).getCourseTime());
+        holder.courseTv.setText(currentCourse.getCourseTitle());
+        holder.dayTv.setText(currentCourse.getCourseDay());
+        holder.timeTv.setText(currentCourse.getCourseTime());
         String colorHex = currentCourse.getCourseColour();
         holder.itemView.setBackgroundColor(Color.parseColor(colorHex));
+
+        // Set click listener for each card
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Check the course title and navigate to the appropriate activity
+                if ("GELITPH".equals(currentCourse.getCourseTitle())) {
+                    Intent intent = new Intent(context, attendance.class);
+                    intent.putExtra("courseTitle", currentCourse.getCourseTitle()); // Pass any necessary data
+                    context.startActivity(intent);
+                }
+            }
+        });
     }
 
     @Override
