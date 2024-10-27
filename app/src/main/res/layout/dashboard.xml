@@ -8,7 +8,7 @@
 
     <LinearLayout
         android:id="@+id/toolBarTopLL"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
         android:gravity="center_horizontal"
@@ -23,7 +23,6 @@
             android:layout_height="47dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="10dp"
-            android:layout_marginEnd="40dp"
             android:layout_marginBottom="10dp"
             app:layout_constraintBottom_toBottomOf="@+id/toolbar"
             app:layout_constraintEnd_toStartOf="@+id/logoText"
@@ -53,7 +52,6 @@
             android:id="@+id/userTop"
             android:layout_width="41dp"
             android:layout_height="46dp"
-            android:layout_marginStart="40dp"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="10dp"
@@ -66,10 +64,10 @@
             app:srcCompat="@drawable/user" />
     </LinearLayout>
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/frameLayout"
-        android:layout_width="411dp"
-        android:layout_height="257dp"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolBarTopLL">
@@ -78,12 +76,12 @@
             android:id="@+id/imageGreetIv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="4dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/toolbar"
-            app:srcCompat="@drawable/stock" />
+            app:srcCompat="@drawable/stock"
+            android:scaleType="centerCrop"/>
 
         <TextView
             android:id="@+id/greetingTv"
@@ -152,7 +150,7 @@
             android:textColor="#3F51B5"
             android:textSize="14sp" />
 
-    </FrameLayout>
+    </RelativeLayout>
 
     <LinearLayout
         android:id="@+id/eventsLL"
