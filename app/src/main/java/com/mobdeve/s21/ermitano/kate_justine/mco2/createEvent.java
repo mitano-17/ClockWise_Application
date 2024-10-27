@@ -28,15 +28,6 @@ public class createEvent extends AppCompatActivity {
             }
         });
 
-        Button scanQR = findViewById(R.id.genQRBt); //for now
-        scanQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(createEvent.this, joinEventqr.class);
-                startActivity(intent);
-            }
-        });
-
         ImageView BackBt = findViewById(R.id.backImgVw);
         BackBt.setOnClickListener(new View.OnClickListener() {
             @Override

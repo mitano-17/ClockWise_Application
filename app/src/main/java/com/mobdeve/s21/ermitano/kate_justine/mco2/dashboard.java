@@ -1,6 +1,9 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,5 +38,22 @@ public class dashboard extends AppCompatActivity {
         myAdapter = new dashboard_adapter(this, courseList);
         eventsRecycler.setAdapter(myAdapter);
 
+        Button createBtn = findViewById(R.id.createEventBtn);
+        createBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(dashboard.this, createEvent.class);
+                startActivity(intent);
+            }
+        });
+
+        Button joinBtn = findViewById(R.id.joinEventBtn);
+        joinBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(dashboard.this, joinEventqr.class);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -24,7 +24,8 @@ public class viewEvent extends AppCompatActivity {
             backBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    Intent intent = new Intent(viewEvent.this, dashboard.class);
+                    startActivity(intent);
                 }
             });
     }
