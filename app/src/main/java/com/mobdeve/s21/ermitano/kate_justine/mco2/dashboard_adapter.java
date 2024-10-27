@@ -1,6 +1,7 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -26,9 +27,13 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder
 
     @Override
     public void onBindViewHolder(@NonNull dashboard_viewholder holder, int position) {
+        course currentCourse = course.get(position);
+
         holder.courseTv.setText(course.get(position).getCourseTitle());
         holder.dayTv.setText(course.get(position).getCourseDay());
         holder.timeTv.setText(course.get(position).getCourseTime());
+        String colorHex = currentCourse.getCourseColour();
+        holder.itemView.setBackgroundColor(Color.parseColor(colorHex));
     }
 
     @Override
