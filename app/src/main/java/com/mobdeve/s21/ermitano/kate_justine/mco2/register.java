@@ -18,15 +18,6 @@ public class register extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register);
 
-        // collect data
-        EditText fullNameEt = findViewById(R.id.fullNameEt);
-        EditText companyEt = findViewById(R.id.companyEt);
-        EditText emailTv = findViewById(R.id.emailEt);
-        EditText passwordEt = findViewById(R.id.passwordEt);
-        EditText reEnterPasswordEt = findViewById(R.id.reEnterPasswordEt);
-
-        fullName = fullNameEt.getText().toString();
-
         // pass to dashboard
         Button signUpActivity = findViewById(R.id.signUpBtn);
         signUpActivity.setOnClickListener(new View.OnClickListener() {
@@ -40,6 +31,14 @@ public class register extends AppCompatActivity {
 
     // switch to dashboard page
     private void signUpActivity() {
+        // collect data
+        EditText fullNameEt = findViewById(R.id.fullNameEt);
+        EditText companyEt = findViewById(R.id.companyEt);
+        EditText emailTv = findViewById(R.id.emailEt);
+        EditText passwordEt = findViewById(R.id.passwordEt);
+        EditText reEnterPasswordEt = findViewById(R.id.reEnterPasswordEt);
+
+        String fullName = fullNameEt.getText().toString();
         Intent intent = new Intent(this, dashboard.class);
         intent.putExtra("NameGreeting",  fullName);
         startActivity(intent);
