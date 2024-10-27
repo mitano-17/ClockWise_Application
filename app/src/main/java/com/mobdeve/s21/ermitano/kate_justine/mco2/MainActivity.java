@@ -1,41 +1,56 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.activity.EdgeToEdge;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView eventsRecycler;
-    private dashboard_adapter myAdapter;
-    private ArrayList<course> courseList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // set to dashboard as default
+        // set to welcome as default
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.dashboard);
+        setContentView(R.layout.intro);
 
-        // set layout recycler view
-        eventsRecycler = findViewById(R.id.EventsRv);
-        eventsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        // register button
+        Button registerActivity = findViewById(R.id.SignUpBtn);
+        registerActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                registerActivity();
+            }
+        });
 
-        // fill course list
-        courseList = placeholderData.generateCourseData();
+        // login button
+        Button loginActivity = findViewById(R.id.loginBtn);
+        loginActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                loginActivity();
+            }
+        });
+    }
 
-        // fill recycler view data
-        myAdapter = new dashboard_adapter(this, courseList);
-        eventsRecycler.setAdapter(myAdapter);
+    // switch to registration page
+    private void registerActivity() {
+        // create intent
+        Intent intent = new Intent(this, register.class);
+        startActivity(intent);
+    }
 
-
-
+    // switch to login page
+    private void loginActivity() {
+        // create intent
+        Intent intent = new Intent(this, login.class);
+        startActivity(intent);
     }
 }
