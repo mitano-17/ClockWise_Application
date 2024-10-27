@@ -1,0 +1,2 @@
+com.mobdeve.s21.ermitano.kate_justine.mco2.test:style/WhiteBackgroundTheme = 0x7f010001
+com.mobdeve.s21.ermitano.kate_justine.mco2.test:style/WhiteBackgroundDialogTheme = 0x7f010000
