@@ -73,6 +73,9 @@
             android:name="com.mobdeve.s21.ermitano.kate_justine.mco2.profile"
             android:exported="true" />
         <activity
+            android:name="com.mobdeve.s21.ermitano.kate_justine.mco2.editprofile"
+            android:exported="true" />
+        <activity
             android:name="com.mobdeve.s21.ermitano.kate_justine.mco2.report"
             android:exported="true" />
         <activity

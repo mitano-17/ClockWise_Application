@@ -32,6 +32,7 @@
         <activity android:name=".enterEventqr" android:exported="true" />
 
         <activity android:name=".profile" android:exported="true" />
+        <activity android:name=".editprofile" android:exported="true" />
         <activity android:name=".report" android:exported="true" />
         <activity android:name=".attendance" android:exported="true" />
 

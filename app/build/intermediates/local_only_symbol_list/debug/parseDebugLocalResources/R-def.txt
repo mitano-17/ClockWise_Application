@@ -64,6 +64,7 @@ id btnLogout
 id button2
 id button3
 id button4
+id cancelProfileBtn
 id chipGroup
 id chip_academic
 id chip_organizational
@@ -130,6 +131,7 @@ id receiveAlertTv
 id report
 id reportbtn
 id saveBt
+id saveProfileBtn
 id settings2
 id signUpBtn
 id startDateTv
@@ -156,6 +158,7 @@ id viewEventTitle
 id viewStartDateTv
 id viewStartTimeTv
 layout activity_attendance
+layout activity_editprofile
 layout activity_main
 layout activity_profile
 layout activity_report

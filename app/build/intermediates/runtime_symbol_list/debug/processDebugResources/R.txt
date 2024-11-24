@@ -3310,6 +3310,7 @@ int id button4 0x7f0a007b
 int id buttonPanel 0x7f0a007c
 int id cache_measures 0x7f0a007d
 int id callMeasure 0x7f0a007e
+int id cancelProfileBtn 0x7f0a026e
 int id cancel_button 0x7f0a007f
 int id carryVelocity 0x7f0a0080
 int id center 0x7f0a0081
@@ -3646,6 +3647,7 @@ int id right_side 0x7f0a01ca
 int id rounded 0x7f0a01cb
 int id row_index_key 0x7f0a01cc
 int id saveBt 0x7f0a01cd
+int id saveProfileBtn 0x7f0a026f
 int id save_non_transition_alpha 0x7f0a01ce
 int id save_overlay_view 0x7f0a01cf
 int id sawtooth 0x7f0a01d0
@@ -3921,6 +3923,7 @@ int layout abc_search_view 0x7f0d0019
 int layout abc_select_dialog_material 0x7f0d001a
 int layout abc_tooltip 0x7f0d001b
 int layout activity_attendance 0x7f0d001c
+int layout activity_editprofile 0x7f0d007b
 int layout activity_main 0x7f0d001d
 int layout activity_profile 0x7f0d001e
 int layout activity_report 0x7f0d001f

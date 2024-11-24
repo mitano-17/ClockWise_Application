@@ -66,7 +66,8 @@ public class profile extends AppCompatActivity {
 
         // Edit profile button functionality
         editProfileBtn.setOnClickListener(view -> {
-            Toast.makeText(profile.this, "Edit Profile feature coming soon!", Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(profile.this, editprofile.class);
+            startActivityForResult(intent, 1); // Use requestCode = 1 to handle result
         });
 
         // Report button functionality (optional)
@@ -113,5 +114,15 @@ public class profile extends AppCompatActivity {
                         Toast.makeText(profile.this, "Failed to load profile: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        // Refresh profile data if changes were made in EditProfileActivity
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            loadUserProfile(); // Reload profile details
+        }
     }
 }
