@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.mobdeve.s21.ermitano.kate_justine.mco2.app-mergeDebugResources-29:/values-v18/values-v18.xml",
+            "outputFile": "com.mobdeve.s21.ermitano.kate_justine.mco2.app-mergeDebugResources-42:/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\sigbi\\.gradle\\caches\\transforms-4\\9db7aa2f674b483b85f7a172fe4f9c04\\transformed\\appcompat-1.7.0\\res\\values-v18\\values-v18.xml",
+                    "source": "C:\\Users\\sigbi\\.gradle\\caches\\transforms-4\\7d2ed4edb020243a3593d05b89cf29eb\\transformed\\appcompat-1.7.0\\res\\values-v18\\values-v18.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

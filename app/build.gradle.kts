@@ -45,9 +45,13 @@ dependencies {
 
     // Firebase BOM to manage Firebase dependencies
     implementation(platform("com.google.firebase:firebase-bom:33.6.0"))
-
+    // authentication
     implementation("com.google.firebase:firebase-analytics")
-
     // Add Google Sign-In dependency
     implementation("com.google.android.gms:play-services-auth:20.5.0")
+    // database dependency
+    implementation("com.google.firebase:firebase-firestore:24.4.2")
+    // for loading images
+    implementation ("com.github.bumptech.glide:glide:4.15.1")
+
 }
