@@ -1,3 +1,0 @@
-com.mobdeve.s21.ermitano.kate_justine.mco2.test
-style WhiteBackgroundDialogTheme
-style WhiteBackgroundTheme

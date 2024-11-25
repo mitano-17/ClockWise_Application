@@ -54,4 +54,12 @@ dependencies {
     // for loading images
     implementation ("com.github.bumptech.glide:glide:4.15.1")
 
+    implementation ("com.google.firebase:firebase-storage:20.2.1")
+    implementation ("com.google.firebase:firebase-firestore:24.6.3")
+
+    // MPAndroidChart
+    //implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+
+
 }
