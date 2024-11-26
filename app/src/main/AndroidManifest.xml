@@ -43,7 +43,7 @@
         <activity android:name=".report" android:exported="true" />
         <activity android:name=".attendance" android:exported="true" />
 
-
+        <activity android:name=".generatedQRcode" android:exported="true" />
 
         <meta-data
             android:name="preloaded_fonts"
