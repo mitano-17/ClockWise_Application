@@ -16,15 +16,13 @@
         tools:layout_editor_absoluteX="16dp"
         tools:layout_editor_absoluteY="0dp">
 
-        <ImageButton
+        <ImageView
             android:id="@+id/backImg4"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="-8dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="9dp"
             android:layout_marginRight="15dp"
-            app:srcCompat="@drawable/left"
-            android:scaleType="fitCenter"
-            android:adjustViewBounds="true"/>
+            app:srcCompat="@drawable/left" />
 
         <TextView
             android:id="@+id/textView"
