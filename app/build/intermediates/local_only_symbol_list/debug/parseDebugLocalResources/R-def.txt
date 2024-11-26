@@ -69,6 +69,7 @@ id chipGroup
 id chip_academic
 id chip_organizational
 id classStatusTv
+id colorPicker
 id companyEt
 id companyTv
 id coordinatorLayout
@@ -128,6 +129,7 @@ id qrbackground_image
 id radioButton
 id radioButton2
 id radioButton3
+id radioGroup
 id reEnterPasswordEt
 id reEnterPasswordTv
 id receiveAlertTv

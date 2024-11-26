@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "928805599139",
+    "project_id": "sample-591d5",
+    "storage_bucket": "sample-591d5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928805599139:android:e01225913fadc366760c16",
+        "android_client_info": {
+          "package_name": "com.mobdeve.s21.ermitano.kate_justine.mco2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBQ5MkSUzcIobLcBSxPjpjmF1ZytqLT8wo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

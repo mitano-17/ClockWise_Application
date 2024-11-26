@@ -3336,6 +3336,7 @@ id clip_vertical
 id clockwise
 id closest
 id collapseActionView
+id colorPicker
 id companyEt
 id companyTv
 id compress
@@ -3635,6 +3636,7 @@ id radio
 id radioButton
 id radioButton2
 id radioButton3
+id radioGroup
 id ratio
 id reEnterPasswordEt
 id reEnterPasswordTv

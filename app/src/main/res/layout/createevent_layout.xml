@@ -102,7 +102,7 @@
                     android:background="#F4EFEF"
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
-                    android:hint=" Jun 10, 2024"
+                    android:hint="Select Date"
                     android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -113,7 +113,7 @@
                     android:background="#F4EFEF"
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
-                    android:hint="  9:15 AM"
+                    android:hint="Select Time"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -146,7 +146,7 @@
                     android:background="#F4EFEF"
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
-                    android:hint=" Jun 10, 2024"
+                    android:hint="Select Date"
                     android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -157,7 +157,7 @@
                     android:background="#F4EFEF"
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
-                    android:hint=" 10:45 AM"
+                    android:hint="Select Time"
                     android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
@@ -186,7 +186,7 @@
                 android:background="#F4EFEF"
                 android:backgroundTint="#EEE9F0"
                 android:fontFamily="@font/lexend_medium"
-                android:hint=" 34"
+                android:hint=" #"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -208,7 +208,7 @@
                 android:textSize="14sp" />
 
             <ImageView
-                android:id="@+id/imageView2"
+                android:id="@+id/colorPicker"
                 android:layout_width="7dp"
                 android:layout_height="25dp"
                 android:layout_gravity="end"
@@ -248,116 +248,128 @@
                     android:backgroundTint="#D9A35C"
                     app:chipSpacing="8dp"
                     app:singleLine="true"
-                    app:singleSelection="false">
+                    app:singleSelection="false" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_academic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Academic"
-                        android:textColor="@android:color/black"
-                        app:chipBackgroundColor="#87EBD7"
-                        app:chipStrokeWidth="0dp"
-                        app:closeIconTint="@android:color/black"
-                        app:closeIconVisible="true"
-                        app:strokeColor="@android:color/transparent" />
+                    <!--
+                      <com.google.android.material.chip.Chip
+                          android:id="@+id/chip_academic"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Academic"
+                          android:textColor="@android:color/black"
+                          app:chipBackgroundColor="#87EBD7"
+                          app:chipStrokeWidth="0dp"
+                          app:closeIconTint="@android:color/black"
+                          app:closeIconVisible="true"
+                          app:strokeColor="@android:color/transparent" />
 
-                    <com.google.android.material.chip.Chip
-                        android:id="@+id/chip_organizational"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Organizational"
-                        android:textColor="@android:color/black"
-                        app:chipBackgroundColor="#EFA78A"
-                        app:chipStrokeWidth="0dp"
-                        app:closeIconTint="@android:color/black"
-                        app:closeIconVisible="true"
-                        app:strokeColor="@android:color/transparent" />
+                      <com.google.android.material.chip.Chip
+                          android:id="@+id/chip_organizational"
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="Organizational"
+                          android:textColor="@android:color/black"
+                          app:chipBackgroundColor="#EFA78A"
+                          app:chipStrokeWidth="0dp"
+                          app:closeIconTint="@android:color/black"
+                          app:closeIconVisible="true"
+                          app:strokeColor="@android:color/transparent" />
 
-                </com.google.android.material.chip.ChipGroup>
+                  </com.google.android.material.chip.ChipGroup>
+
+                    -->
 
                 <ImageView
                     android:id="@+id/addIcon"
-                    android:layout_width="25dp"
+                    android:layout_width="162dp"
                     android:layout_height="25dp"
+                    android:layout_gravity="right"
                     android:layout_marginTop="20dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
                     app:srcCompat="@android:drawable/ic_input_add"
                     app:tint="#000000" />
-            </LinearLayout>
+
+              </LinearLayout>
 
 
-        </LinearLayout>
+          </LinearLayout>
 
-        <TextView
-            android:id="@+id/receiveAlertTv"
+        <RadioGroup
+            android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="29dp"
-            android:layout_marginStart="45dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/lexend_medium"
-            android:text="Receive Alert"
-            android:textSize="14sp" />
+            android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginStart="45dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="1 hour before event"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginStart="45dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="1 day before event"
-            android:textSize="12sp" />
-
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_marginStart="45dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="Never"
-            android:textSize="12sp" />
-
-        <LinearLayout
-            android:layout_width="354dp"
-            android:layout_height="67dp"
-            android:layout_marginStart="45dp"
-            android:layout_marginTop="35dp"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/genQRBt"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="130dp"
+            <TextView
+                android:id="@+id/receiveAlertTv"
+                android:layout_width="match_parent"
+                android:layout_height="29dp"
+                android:layout_marginStart="45dp"
                 android:layout_weight="1"
-                android:backgroundTint="#ABA8AB"
                 android:fontFamily="@font/lexend_medium"
-                android:text="Generate QR"
-                android:textColor="#FFFFFF" />
+                android:text="Receive Alert"
+                android:textSize="14sp" />
 
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/createEvntBt"
-                android:layout_width="56dp"
-                android:layout_height="40dp"
-                android:layout_weight="1"
-                android:clickable="true"
-                app:backgroundTint="#2196F3"
-                app:fabCustomSize="40dp"
-                app:srcCompat="@android:drawable/ic_input_add"
-                app:tint="#FFFFFF" />
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="45dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="1 hour before event"
+                android:textSize="12sp" />
 
-        </LinearLayout>
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="45dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="1 day before event"
+                android:textSize="12sp" />
 
-    </LinearLayout>
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="45dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="Never"
+                android:textSize="12sp" />
+        </RadioGroup>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+          <LinearLayout
+              android:layout_width="354dp"
+              android:layout_height="67dp"
+              android:layout_marginStart="45dp"
+              android:layout_marginTop="35dp"
+              android:orientation="horizontal">
+
+              <Button
+                  android:id="@+id/genQRBt"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:layout_marginRight="130dp"
+                  android:layout_weight="1"
+                  android:backgroundTint="#ABA8AB"
+                  android:fontFamily="@font/lexend_medium"
+                  android:text="Generate QR"
+                  android:textColor="#FFFFFF" />
+
+              <com.google.android.material.floatingactionbutton.FloatingActionButton
+                  android:id="@+id/createEvntBt"
+                  android:layout_width="56dp"
+                  android:layout_height="40dp"
+                  android:layout_weight="1"
+                  android:clickable="true"
+                  app:backgroundTint="#2196F3"
+                  app:fabCustomSize="40dp"
+                  app:srcCompat="@android:drawable/ic_input_add"
+                  app:tint="#FFFFFF" />
+
+          </LinearLayout>
+
+      </LinearLayout>
+
+  </androidx.constraintlayout.widget.ConstraintLayout>
