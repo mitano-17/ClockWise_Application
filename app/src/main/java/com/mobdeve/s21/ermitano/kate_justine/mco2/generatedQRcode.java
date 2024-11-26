@@ -1,8 +1,11 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -64,11 +67,27 @@ public class generatedQRcode extends AppCompatActivity {
 
     // Download QR Code
     private void downloadQRCode(Bitmap qrBitmap) {
-        File qrFile = new File(getExternalFilesDir(null), "GeneratedQRCode.png");
 
-        try (FileOutputStream out = new FileOutputStream(qrFile)) {
-            qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            Toast.makeText(this, "QR Code saved to: " + qrFile.getAbsolutePath(), Toast.LENGTH_LONG).show();
+        try {
+            if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
+                // Get the path to the Downloads folder
+                File downloadsFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                // Create the file in the Downloads folder
+                File qrFile = new File(downloadsFolder, "GeneratedQRCode.png");
+                // Save the bitmap to the file
+                FileOutputStream outputStream = new FileOutputStream(qrFile);
+                qrBitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                outputStream.flush();
+                outputStream.close();
+
+                // Notify the user
+                Toast.makeText(this, "QR Code saved to Downloads folder", Toast.LENGTH_SHORT).show();
+
+                // Refresh Media Store to make the file immediately visible in Downloads
+                Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                mediaScanIntent.setData(Uri.fromFile(qrFile));
+                sendBroadcast(mediaScanIntent);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             Toast.makeText(this, "Error saving QR code", Toast.LENGTH_SHORT).show();
