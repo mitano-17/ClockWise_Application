@@ -59,6 +59,13 @@ public class dashboard extends AppCompatActivity {
             startActivity(intent);
         });
 
+        // Join event button
+        Button joinBtn = findViewById(R.id.joinEventBtn);
+        joinBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(dashboard.this, joinEventqr.class);
+            startActivity(intent);
+        });
+
         // Profile button
         ImageView profileBtn = findViewById(R.id.userTop);
         profileBtn.setOnClickListener(v -> {
@@ -66,7 +73,6 @@ public class dashboard extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
 
 
     private void loadUserName() {
