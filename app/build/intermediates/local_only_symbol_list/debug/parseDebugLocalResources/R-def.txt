@@ -52,6 +52,7 @@ id EventsTv
 id Iconc
 id NumAttendeesTv
 id NumTv
+id QRcodeIv
 id SignUpBtn
 id addIcon
 id back
@@ -66,8 +67,6 @@ id buttonMonth
 id buttonWeek
 id cancelProfileBtn
 id chipGroup
-id chip_academic
-id chip_organizational
 id classStatusTv
 id colorPicker
 id companyEt
@@ -78,11 +77,13 @@ id createEventBtn
 id createEvntBt
 id dayTv
 id discTv
+id downloadBtn
 id editBtn
 id emailEt
 id emailTv
 id endDateTv
 id endTimeTv
+id eventBg
 id eventEndTv
 id eventIcon
 id eventLabel
@@ -144,6 +145,7 @@ id startTimeTv
 id statisticsTv
 id statsLL
 id subtitleTv
+id successTv
 id textView
 id timeTv
 id titleTv
@@ -157,9 +159,10 @@ id tv_event_date_time
 id tv_event_location
 id tv_event_name
 id userTop
-id view
+id viewChipGroup
 id viewEventEndDateTv
 id viewEventEndTimeTv
+id viewEventTagsTv
 id viewEventTitle
 id viewStartDateTv
 id viewStartTimeTv
@@ -172,6 +175,7 @@ layout createevent_layout
 layout dashboard
 layout editevent_layout
 layout events_item_layout
+layout generatedqrcode
 layout intro
 layout joinevent_layout1
 layout joinevent_layout2

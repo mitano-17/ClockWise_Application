@@ -1118,6 +1118,7 @@ attr suffixText
 attr suffixTextAppearance
 attr suffixTextColor
 attr suggestionRowLayout
+attr supportsAlpha
 attr switchMinWidth
 attr switchPadding
 attr switchStyle
@@ -1335,6 +1336,16 @@ attr windowNoTitle
 attr yearSelectedStyle
 attr yearStyle
 attr yearTodayStyle
+attr zxing_framing_rect_height
+attr zxing_framing_rect_width
+attr zxing_possible_result_points
+attr zxing_preview_scaling_strategy
+attr zxing_result_view
+attr zxing_scanner_layout
+attr zxing_use_texture_view
+attr zxing_viewfinder_laser
+attr zxing_viewfinder_laser_visibility
+attr zxing_viewfinder_mask
 bool abc_action_bar_embed_tabs
 bool abc_config_actionMenuItemAllCaps
 bool mtrl_btn_textappearance_all_caps
@@ -2129,6 +2140,16 @@ color switch_thumb_normal_material_light
 color tooltip_background_dark
 color tooltip_background_light
 color white
+color zxing_custom_possible_result_points
+color zxing_custom_result_view
+color zxing_custom_viewfinder_laser
+color zxing_custom_viewfinder_mask
+color zxing_possible_result_points
+color zxing_result_view
+color zxing_status_text
+color zxing_transparent
+color zxing_viewfinder_laser
+color zxing_viewfinder_mask
 dimen abc_action_bar_content_inset_material
 dimen abc_action_bar_content_inset_with_nav
 dimen abc_action_bar_default_height_material
@@ -2210,6 +2231,10 @@ dimen abc_text_size_subhead_material
 dimen abc_text_size_subtitle_material_toolbar
 dimen abc_text_size_title_material
 dimen abc_text_size_title_material_toolbar
+dimen ambilwarna_hsvHeight
+dimen ambilwarna_hsvWidth
+dimen ambilwarna_hueWidth
+dimen ambilwarna_spacer
 dimen appcompat_dialog_background_inset
 dimen browser_actions_context_menu_max_width
 dimen browser_actions_context_menu_min_padding
@@ -3013,6 +3038,13 @@ drawable abc_textfield_search_activated_mtrl_alpha
 drawable abc_textfield_search_default_mtrl_alpha
 drawable abc_textfield_search_material
 drawable abc_vector_test
+drawable ambilwarna_alphacheckered
+drawable ambilwarna_alphacheckered_tiled
+drawable ambilwarna_arrow_down
+drawable ambilwarna_arrow_right
+drawable ambilwarna_cursor
+drawable ambilwarna_hue
+drawable ambilwarna_target
 drawable avd_hide_password
 drawable avd_show_password
 drawable back
@@ -3198,6 +3230,7 @@ id META
 id NO_DEBUG
 id NumAttendeesTv
 id NumTv
+id QRcodeIv
 id SHIFT
 id SHOW_ALL
 id SHOW_PATH
@@ -3271,6 +3304,19 @@ id aligned
 id all
 id allStates
 id always
+id ambilwarna_alphaCheckered
+id ambilwarna_alphaCursor
+id ambilwarna_cursor
+id ambilwarna_dialogView
+id ambilwarna_newColor
+id ambilwarna_oldColor
+id ambilwarna_overlay
+id ambilwarna_pref_widget_box
+id ambilwarna_state
+id ambilwarna_target
+id ambilwarna_viewContainer
+id ambilwarna_viewHue
+id ambilwarna_viewSatBri
 id animateToEnd
 id animateToStart
 id antiClockwise
@@ -3325,8 +3371,6 @@ id chains
 id checkbox
 id checked
 id chipGroup
-id chip_academic
-id chip_organizational
 id chronometer
 id circle_center
 id classStatusTv
@@ -3382,6 +3426,7 @@ id disablePostScroll
 id disableScroll
 id discTv
 id disjoint
+id downloadBtn
 id dragAnticlockwise
 id dragClockwise
 id dragDown
@@ -3410,6 +3455,7 @@ id endToStart
 id enterAlways
 id enterAlwaysCollapsed
 id escape
+id eventBg
 id eventEndTv
 id eventIcon
 id eventLabel
@@ -3721,6 +3767,7 @@ id stretch
 id submenuarrow
 id submit_area
 id subtitleTv
+id successTv
 id supportScrollUp
 id tabMode
 id tag_accessibility_actions
@@ -3790,9 +3837,10 @@ id up
 id useLogo
 id userTop
 id vertical_only
-id view
+id viewChipGroup
 id viewEventEndDateTv
 id viewEventEndTimeTv
+id viewEventTagsTv
 id viewEventTitle
 id viewStartDateTv
 id viewStartTimeTv
@@ -3814,6 +3862,19 @@ id wrap_content
 id wrap_content_constrained
 id x_left
 id x_right
+id zxing_back_button
+id zxing_barcode_scanner
+id zxing_barcode_surface
+id zxing_camera_closed
+id zxing_camera_error
+id zxing_decode
+id zxing_decode_failed
+id zxing_decode_succeeded
+id zxing_possible_result_points
+id zxing_preview_failed
+id zxing_prewiew_size_ready
+id zxing_status_view
+id zxing_viewfinder_view
 integer abc_config_activityDefaultDur
 integer abc_config_activityShortDur
 integer app_bar_elevation_anim_duration
@@ -3934,6 +3995,8 @@ layout activity_editprofile
 layout activity_main
 layout activity_profile
 layout activity_report
+layout ambilwarna_dialog
+layout ambilwarna_pref_widget
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
 layout createevent_layout
@@ -3956,6 +4019,7 @@ layout design_text_input_end_icon
 layout design_text_input_start_icon
 layout editevent_layout
 layout events_item_layout
+layout generatedqrcode
 layout ime_base_split_test_activity
 layout ime_secondary_split_test_activity
 layout intro
@@ -4025,10 +4089,13 @@ layout select_dialog_multichoice_material
 layout select_dialog_singlechoice_material
 layout support_simple_spinner_dropdown_item
 layout viewevent_layout
+layout zxing_barcode_scanner
+layout zxing_capture
 mipmap ic_launcher
 mipmap ic_launcher_round
 plurals mtrl_badge_content_description
 raw firebase_common_keep
+raw zxing_beep
 string abc_action_bar_home_description
 string abc_action_bar_up_description
 string abc_action_menu_overflow_description
@@ -4060,6 +4127,7 @@ string android_credentials_TYPE_PASSWORD_CREDENTIAL
 string androidx_credentials_TYPE_PUBLIC_KEY_CREDENTIAL
 string androidx_startup
 string app_name
+string app_version
 string appbar_scrolling_view_behavior
 string bottom_sheet_behavior
 string bottomsheet_action_collapse
@@ -4097,6 +4165,7 @@ string common_open_on_phone
 string common_signin_button_text
 string common_signin_button_text_long
 string copy_toast_msg
+string define_zxingandroidembedded
 string error_a11y_label
 string error_icon_content_description
 string exposed_dropdown_menu_content_description
@@ -4113,6 +4182,15 @@ string google_storage_bucket
 string hide_bottom_view_on_scroll_behavior
 string icon_content_description
 string item_view_role_description
+string library_zxingandroidembedded_author
+string library_zxingandroidembedded_authorWebsite
+string library_zxingandroidembedded_isOpenSource
+string library_zxingandroidembedded_libraryDescription
+string library_zxingandroidembedded_libraryName
+string library_zxingandroidembedded_libraryVersion
+string library_zxingandroidembedded_libraryWebsite
+string library_zxingandroidembedded_licenseId
+string library_zxingandroidembedded_repositoryLink
 string m3_exceed_max_badge_text_suffix
 string m3_ref_typeface_brand_medium
 string m3_ref_typeface_brand_regular
@@ -4226,6 +4304,10 @@ string searchview_navigation_content_description
 string side_sheet_accessibility_pane_title
 string side_sheet_behavior
 string status_bar_notification_info_overflow
+string zxing_app_name
+string zxing_button_ok
+string zxing_msg_camera_framework_bug
+string zxing_msg_default_status
 style AlertDialog_AppCompat
 style AlertDialog_AppCompat_Light
 style Animation_AppCompat_Dialog
@@ -5356,6 +5438,7 @@ style Widget_MaterialComponents_Toolbar_PrimarySurface
 style Widget_MaterialComponents_Toolbar_Surface
 style Widget_MaterialComponents_Tooltip
 style Widget_Support_CoordinatorLayout
+style zxing_CaptureTheme
 styleable ActionBar background backgroundSplit backgroundStacked contentInsetEnd contentInsetEndWithActions contentInsetLeft contentInsetRight contentInsetStart contentInsetStartWithNavigation customNavigationLayout displayOptions divider elevation height hideOnContentScroll homeAsUpIndicator homeLayout icon indeterminateProgressStyle itemPadding logo navigationMode popupTheme progressBarPadding progressBarStyle subtitle subtitleTextStyle title titleTextStyle
 styleable ActionBarLayout android_layout_gravity
 styleable ActionMenuItemView android_minWidth
@@ -5363,6 +5446,7 @@ styleable ActionMenuView
 styleable ActionMode background backgroundSplit closeItemLayout height subtitleTextStyle titleTextStyle
 styleable ActivityChooserView expandActivityOverflowButtonDrawable initialActivityCount
 styleable AlertDialog android_layout buttonIconDimen buttonPanelSideLayout listItemLayout listLayout multiChoiceItemLayout showTitle singleChoiceItemLayout
+styleable AmbilWarnaPreference supportsAlpha
 styleable AnimatedStateListDrawableCompat android_dither android_visible android_variablePadding android_constantSize android_enterFadeDuration android_exitFadeDuration
 styleable AnimatedStateListDrawableItem android_id android_drawable
 styleable AnimatedStateListDrawableTransition android_drawable android_toId android_fromId android_reversible
@@ -5511,6 +5595,9 @@ styleable ViewPager2 android_orientation
 styleable ViewStubCompat android_id android_layout android_inflatedId
 styleable ViewTransition android_id SharedValue SharedValueId clearsTag duration ifTagNotSet ifTagSet motionInterpolator motionTarget onStateTransition pathMotionArc setsTag transitionDisable upDuration viewTransitionMode
 styleable include constraintSet
+styleable zxing_camera_preview zxing_framing_rect_height zxing_framing_rect_width zxing_preview_scaling_strategy zxing_use_texture_view
+styleable zxing_finder zxing_possible_result_points zxing_result_view zxing_viewfinder_laser zxing_viewfinder_laser_visibility zxing_viewfinder_mask
+styleable zxing_view zxing_scanner_layout
 xml backup_rules
 xml data_extraction_rules
 xml ga_ad_services_config

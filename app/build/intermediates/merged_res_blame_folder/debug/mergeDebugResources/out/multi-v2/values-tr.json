@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mobdeve.s21.ermitano.kate_justine.mco2.app-mergeDebugResources-42:/values-tr/values-tr.xml",
+            "outputFile": "com.mobdeve.s21.ermitano.kate_justine.mco2.app-mergeDebugResources-44:/values-tr/values-tr.xml",
             "map": [
                 {
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-4\\7575de6983d2a3d16ed48b76a04a4adc\\transformed\\credentials-1.2.0-rc01\\res\\values-tr\\values-tr.xml",
@@ -122,6 +122,23 @@
                         "startOffsets": "4657,4767,4922,5058,5163,5310,5440,5567,5820,5992,6099,6256,6390,6535,6702,6764,6828",
                         "endColumns": "109,154,135,104,146,129,126,105,171,106,156,133,144,166,61,63,79",
                         "endOffsets": "4762,4917,5053,5158,5305,5435,5562,5668,5987,6094,6251,6385,6530,6697,6759,6823,6903"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-4\\854f2ac0aa93e7c043d350b3931e4580\\transformed\\zxing-android-embedded-4.3.0\\res\\values-tr\\values-tr.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,116,166,313",
+                        "endColumns": "60,49,146,119",
+                        "endOffsets": "111,161,308,428"
+                    },
+                    "to": {
+                        "startLines": "141,142,143,144",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "12743,12804,12854,13001",
+                        "endColumns": "60,49,146,119",
+                        "endOffsets": "12799,12849,12996,13116"
                     }
                 }
             ]

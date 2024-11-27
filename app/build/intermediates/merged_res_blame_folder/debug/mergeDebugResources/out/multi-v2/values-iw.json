@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.mobdeve.s21.ermitano.kate_justine.mco2.app-mergeDebugResources-42:/values-iw/values-iw.xml",
+            "outputFile": "com.mobdeve.s21.ermitano.kate_justine.mco2.app-mergeDebugResources-44:/values-iw/values-iw.xml",
             "map": [
                 {
                     "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-4\\7575de6983d2a3d16ed48b76a04a4adc\\transformed\\credentials-1.2.0-rc01\\res\\values-iw\\values-iw.xml",
@@ -122,6 +122,23 @@
                         "startOffsets": "361,466,566,674,758,860,976,1055,1133,1224,1318,1412,1506,1606,1699,1794,1887,1978,2070,2151,2256,2359,2457,2562,2664,2766,2920,11961",
                         "endColumns": "104,99,107,83,101,115,78,77,90,93,93,93,99,92,94,92,90,91,80,104,102,97,104,101,101,153,96,81",
                         "endOffsets": "461,561,669,753,855,971,1050,1128,1219,1313,1407,1501,1601,1694,1789,1882,1973,2065,2146,2251,2354,2452,2557,2659,2761,2915,3012,12038"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\ADMIN\\.gradle\\caches\\transforms-4\\854f2ac0aa93e7c043d350b3931e4580\\transformed\\zxing-android-embedded-4.3.0\\res\\values-iw\\values-iw.xml",
+                    "from": {
+                        "startLines": "2,3,4,5",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "55,111,161,296",
+                        "endColumns": "55,49,134,89",
+                        "endOffsets": "106,156,291,381"
+                    },
+                    "to": {
+                        "startLines": "142,143,144,145",
+                        "startColumns": "4,4,4,4",
+                        "startOffsets": "12377,12433,12483,12618",
+                        "endColumns": "55,49,134,89",
+                        "endOffsets": "12428,12478,12613,12703"
                     }
                 }
             ]

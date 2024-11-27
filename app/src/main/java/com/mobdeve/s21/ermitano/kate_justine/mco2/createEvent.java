@@ -12,9 +12,9 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
-
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
@@ -24,11 +24,13 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.Calendar;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+
 
 public class createEvent extends AppCompatActivity {
 
     private FirebaseFirestore db;
-
+    int defaultColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,17 +45,14 @@ public class createEvent extends AppCompatActivity {
         EditText cEndDateTv= findViewById(R.id.endDateTv);
         EditText cEndTimeTv= findViewById(R.id.endTimeTv);
         EditText cNumTv = findViewById(R.id.NumTv);
-        ImageView colorPickerImg = findViewById(R.id.colorPicker);
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
         ImageView addIcon = findViewById(R.id.addIcon);
-
+        ImageView colorPickerImg = findViewById(R.id.colorPicker);
         cStartDateTv.setOnClickListener(view -> datePicker(cStartDateTv));
         cEndDateTv.setOnClickListener(view -> datePicker(cEndDateTv));
         cStartTimeTv.setOnClickListener(view -> timePicker(cStartTimeTv));
         cEndTimeTv.setOnClickListener(view -> timePicker(cEndTimeTv));
-       // colorPickerImg.setOnClickListener(view -> {
         addIcon.setOnClickListener(view -> showEventTypeDialog(chipGroup));
-
         FloatingActionButton createEventBt = findViewById(R.id.createEvntBt);
         createEventBt.setOnClickListener(new View.OnClickListener() {
 
@@ -66,9 +65,21 @@ public class createEvent extends AppCompatActivity {
                 String cEndDate = cEndDateTv.getText().toString().trim();
                 String cEndTime = cEndTimeTv.getText().toString().trim();
                 String cNum = cNumTv.getText().toString().trim();
-
-                RadioGroup radioGroup = findViewById(R.id.radioGroup); // Reference the RadioGroup in your layout
+                String cColor = String.format("#%06X", (0xFFFFFF & defaultColor));
+                RadioGroup radioGroup = findViewById(R.id.radioGroup);
                 int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+
+                ChipGroup chipGroup = findViewById(R.id.chipGroup);
+                StringBuilder tagsBuilder = new StringBuilder();
+                for (int i = 0; i < chipGroup.getChildCount(); i++) {
+                    Chip chip = (Chip) chipGroup.getChildAt(i);
+                    tagsBuilder.append(chip.getText().toString()).append(" ");
+                }
+                String cEventTypes = tagsBuilder.toString();
+
+                if (cEventTypes.endsWith(",")) {
+                    cEventTypes= cEventTypes.substring(0, cEventTypes.length() - 1);
+                }
 
                 if(cEventName.isEmpty()){
                     cEventTitleTv.setError("Event Title cannot be empty.");
@@ -102,16 +113,32 @@ public class createEvent extends AppCompatActivity {
                     Toast.makeText(createEvent.this, "Please select a receive alert option.", Toast.LENGTH_SHORT).show();
                     return;
                 }
+                if(cColor.equals("#FFFFFF")){
+                    Toast.makeText(createEvent.this, "Please select an icon color.", Toast.LENGTH_SHORT).show();
+                    return;
+                }
 
                 RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
                 String selectedOption = selectedRadioButton.getText().toString();
 
-                Event event = new Event(cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum);
+                Event event = new Event(cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes);
 
+                String eventTypes = cEventTypes;
                 db.collection("events")
                         .add(event).addOnSuccessListener(documentReference -> {
                             Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(createEvent.this, viewEvent.class);
+
+                            intent.putExtra("eventName", cEventName);
+                            intent.putExtra("startDate", cStartDate);
+                            intent.putExtra("startTime", cStartTime);
+                            intent.putExtra("endDate", cEndDate);
+                            intent.putExtra("endTime", cEndTime);
+                            intent.putExtra("numAtendees", cNum);
+                            intent.putExtra("color", cColor);
+                            intent.putExtra("receiveAlert", selectedOption);
+                            intent.putExtra("eventTags", eventTypes);
+
                             startActivity(intent);
 
                         }).addOnFailureListener(e -> {
@@ -137,7 +164,32 @@ public class createEvent extends AppCompatActivity {
             }
         });
 
+        defaultColor = ContextCompat.getColor(createEvent.this, com.google.android.material.R.color.design_default_color_primary);
+        colorPickerImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openColorPicker();
+            }
+        });
+
     }
+
+    public void openColorPicker(){
+        ImageView colorPickerImg = findViewById(R.id.colorPicker);
+        AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
+            @Override
+            public void onCancel(AmbilWarnaDialog dialog) {
+            }
+            @Override
+            public void onOk(AmbilWarnaDialog dialog, int color) {
+                defaultColor = color;
+                colorPickerImg.setImageDrawable(null);
+                colorPickerImg.setBackgroundColor(color);
+            }
+        });
+        ambilWarnaDialog.show();
+    }
+
     private void datePicker(EditText dateInput){
 
         Calendar calendar = Calendar.getInstance();
@@ -181,10 +233,9 @@ public class createEvent extends AppCompatActivity {
 
                 Chip newChip = new Chip(this);
                 newChip.setText(newTag);
-                newChip.setTextColor(getResources().getColor(android.R.color.black));
                 newChip.setCloseIconVisible(true);
                 newChip.setOnCloseIconClickListener(v -> {
-                    chipGroup.removeView(newChip); // Remove chip on close icon click
+                    chipGroup.removeView(newChip);
                 });
                 chipGroup.addView(newChip);
             }else {

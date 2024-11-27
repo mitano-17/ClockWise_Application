@@ -12,16 +12,22 @@ public class Event {
     private String endDate;
     private String endTime;
     private String numAttendees;
+    private String color;
+    private String receiveAlert;
+    private String eventType;
 
     public Event() {}
 
-    public Event(String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees) {
+    public Event(String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType) {
         this.eventName = eventName;
         this.startDate = startDate;
         this.startTime = startTime;
         this.endDate = endDate;
         this.endTime = endTime;
         this.numAttendees = numAttendees;
+        this.color = color;
+        this.receiveAlert = receiveAlert;
+        this.eventType = eventType;
     }
 
     // Getters and setters
@@ -31,5 +37,7 @@ public class Event {
     public String getEndDate() { return endDate; }
     public String getEndTime() { return endTime; }
     public String getNumAttendees() { return numAttendees; }
-
+    public String getColor () { return color; }
+    public String getReceiveAlert() { return receiveAlert; }
+    public String getEventType() { return eventType; }
 }

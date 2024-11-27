@@ -61,7 +61,7 @@ dependencies {
     //implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     //For Color picker
-
+    implementation ("com.github.yukuku:ambilwarna:2.0.1")
     // Generate QR code
     implementation ("com.google.zxing:core:3.5.2")
     implementation ("com.journeyapps:zxing-android-embedded:4.3.0")
