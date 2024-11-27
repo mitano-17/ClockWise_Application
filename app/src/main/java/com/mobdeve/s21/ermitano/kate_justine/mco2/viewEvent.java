@@ -81,14 +81,14 @@ public class viewEvent extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_EDIT_EVENT && resultCode == RESULT_OK) {
+        if (requestCode == REQUEST_EDIT_EVENT && resultCode == RESULT_OK && data != null) {
             // Extract updated data from the Intent
             String updatedEventName = data.getStringExtra("eventName");
             String updatedStartDate = data.getStringExtra("startDate");
             String updatedStartTime = data.getStringExtra("startTime");
             String updatedEndDate = data.getStringExtra("endDate");
             String updatedEndTime = data.getStringExtra("endTime");
-            String updatedNumAtendees = data.getStringExtra("numAtendees");
+            String updatedNumAttendees = data.getStringExtra("numAttendees");
             String updatedColor = data.getStringExtra("color");
             String updatedEventTags = data.getStringExtra("eventTags");
 
@@ -98,7 +98,7 @@ public class viewEvent extends AppCompatActivity {
             TextView startTimeTv = findViewById(R.id.viewStartTimeTv);
             TextView endDateTv = findViewById(R.id.viewEventEndDateTv);
             TextView endTimeTv = findViewById(R.id.viewEventEndTimeTv);
-            TextView numAtendeesTv = findViewById(R.id.NumTv);
+            TextView numAttendeesTv = findViewById(R.id.NumTv);
             TextView eventTagsTextView = findViewById(R.id.viewEventTagsTv);
             View colorView = findViewById(R.id.eventBg);
 
@@ -107,7 +107,7 @@ public class viewEvent extends AppCompatActivity {
             startTimeTv.setText(updatedStartTime);
             endDateTv.setText(updatedEndDate);
             endTimeTv.setText(updatedEndTime);
-            numAtendeesTv.setText(updatedNumAtendees);
+            numAttendeesTv.setText(updatedNumAttendees);
             colorView.setBackgroundColor(Color.parseColor(updatedColor));
             eventTagsTextView.setText(updatedEventTags);
         }

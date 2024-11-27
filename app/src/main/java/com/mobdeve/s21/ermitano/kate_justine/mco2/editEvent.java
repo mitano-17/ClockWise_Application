@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -32,7 +33,7 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class editEvent extends AppCompatActivity {
 
-    private EditText eEventTitleTv, eStartDateTv, eStartTimeTv, eEndDateTv, eEndTimeTv, eNumAttendees;
+    private EditText eEventTitleTv, eStartDateTv, eStartTimeTv, eEndDateTv, eEndTimeTv, eNumAttendees, eColor, eReceiveAlert, eEventType;
     private ChipGroup chipGroup;
     private ImageView addIcon, colorPickerImg;
     String eventId;
@@ -54,23 +55,24 @@ public class editEvent extends AppCompatActivity {
         String startTime = intent.getStringExtra("startTime");
         String endDate = intent.getStringExtra("endDate");
         String endTime = intent.getStringExtra("endTime");
-        String numAtendees = intent.getStringExtra("numAtendees");
+        String numAttendees = intent.getStringExtra("numAttendees");
 
         eEventTitleTv = findViewById(R.id.EventTitleInput);
-        eEventTitleTv.setText(eventName);
         eStartDateTv = findViewById(R.id.startDateTv);
-        eStartDateTv.setText(startDate);
         eStartTimeTv = findViewById(R.id.startTimeTv);
-        eStartTimeTv.setText(startTime);
         eEndDateTv = findViewById(R.id.endDateTv);
-        eEndDateTv.setText(endDate);
         eEndTimeTv = findViewById(R.id.endTimeTv);
-        eEndTimeTv.setText(endTime);
         eNumAttendees = findViewById(R.id.NumTv);
-        eNumAttendees.setText(numAtendees);
         chipGroup = findViewById(R.id.chipGroup);
         addIcon = findViewById(R.id.addIcon);
         colorPickerImg = findViewById(R.id.imageView2);
+
+        eEventTitleTv.setText(eventName);
+        eStartDateTv.setText(startDate);
+        eStartTimeTv.setText(startTime);
+        eEndDateTv.setText(endDate);
+        eEndTimeTv.setText(endTime);
+        eNumAttendees.setText(numAttendees);
 
         //Start Date picker
         eStartDateTv.setOnClickListener(view -> datePicker(eStartDateTv));
@@ -116,45 +118,40 @@ public class editEvent extends AppCompatActivity {
     }
 
     private void saveChanges() {
-
-        String upEventTitle = eEventTitleTv.getText().toString().trim();
-        String upStartDate = eStartDateTv.getText().toString().trim();
-        String upStartTime = eStartTimeTv.getText().toString().trim();
-        String upEndDate = eEndDateTv.getText().toString().trim();
-        String upEndTime = eEndTimeTv.getText().toString().trim();
-        String upNumAttendees = eNumAttendees.getText().toString().trim();
+        String upEventTitle = eEventTitleTv.getText().toString();
+        String upStartDate = eStartDateTv.getText().toString();
+        String upStartTime = eStartTimeTv.getText().toString();
+        String upEndDate = eEndDateTv.getText().toString();
+        String upEndTime = eEndTimeTv.getText().toString();
+        String upNumAttendees = eNumAttendees.getText().toString();
         String upColor = String.format("#%06X", (0xFFFFFF & defaultColor));
-        RadioGroup radioGroup = findViewById(R.id.radioGroup);
-        int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
-        RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-        String selectedOption = selectedRadioButton.getText().toString();
-        ChipGroup chipGroup = findViewById(R.id.chipGroup);
         StringBuilder tagsBuilder = new StringBuilder();
+
+        // Collect chip tags
         for (int i = 0; i < chipGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipGroup.getChildAt(i);
             tagsBuilder.append(chip.getText().toString()).append(" ");
         }
-        String upEventTypes = tagsBuilder.toString();
+        String upEventTypes = tagsBuilder.toString().trim();
 
-        if (upEventTitle.isEmpty() || upStartDate.isEmpty() || upStartTime.isEmpty() || upEndDate.isEmpty() || upEndTime.isEmpty() || upNumAttendees.isEmpty()) {
+        // Input validation
+        if (upEventTitle.isEmpty() || upStartDate.isEmpty() || upStartTime.isEmpty() ||
+                upEndDate.isEmpty() || upEndTime.isEmpty() || upNumAttendees.isEmpty()) {
             Toast.makeText(editEvent.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
+
         if (chipGroup.getChildCount() == 0) {
             Toast.makeText(editEvent.this, "Please add at least one event type tag.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (selectedRadioButtonId == -1) {
-            Toast.makeText(editEvent.this, "Please select a receive alert option.", Toast.LENGTH_SHORT).show();
-            return;
-        }
-        if (upColor.equals("#FFFFFF")) {
-            Toast.makeText(editEvent.this, "Please select an icon color.", Toast.LENGTH_SHORT).show();
+
+        if (eventId == null || eventId.isEmpty()) {
+            Toast.makeText(this, "Event ID is missing.", Toast.LENGTH_SHORT).show();
             return;
         }
 
-       // Event updatedEvent = new Event(upEventTitle, upStartDate, upStartTime, upEndDate, upEndTime, upNumAttendees, upColor, selectedOption, upEventTypes);
-
+        // Prepare updated event data
         Map<String, Object> updatedEvent = new HashMap<>();
         updatedEvent.put("eventName", upEventTitle);
         updatedEvent.put("startDate", upStartDate);
@@ -165,27 +162,21 @@ public class editEvent extends AppCompatActivity {
         updatedEvent.put("color", upColor);
         updatedEvent.put("eventTags", upEventTypes);
 
+        Log.d("FirestoreUpdate", "Event ID: " + eventId);
+        Log.d("FirestoreUpdate", "Updated Data: " + updatedEvent);
+
+
+        // Update Firestore
         db.collection("events").document(eventId).update(updatedEvent)
                 .addOnSuccessListener(aVoid -> {
-                Toast.makeText(editEvent.this, "Event Updated Successfully.", Toast.LENGTH_SHORT).show();
-
-                Intent intent = new Intent(editEvent.this, viewEvent.class);
-                intent.putExtra("eventId", eventId);
-                intent.putExtra("eventName", upEventTitle);
-                intent.putExtra("startDate", upStartDate);
-                intent.putExtra("startTime", upStartTime);
-                intent.putExtra("endDate", upEndDate);
-                intent.putExtra("endTime", upEndTime);
-                intent.putExtra("numAttendees", upNumAttendees);
-                intent.putExtra("color", upColor);
-                intent.putExtra("eventTags", upEventTypes);
-                setResult(RESULT_OK, intent);
-                finish();
-        }).addOnFailureListener(e -> {
-            Toast.makeText(editEvent.this, "Error in updating the event.", Toast.LENGTH_SHORT).show();
-        });
+                    Toast.makeText(this, "Event Updated Successfully.", Toast.LENGTH_SHORT).show();
+                    setResult(RESULT_OK);
+                    finish();
+                })
+                .addOnFailureListener(e -> Toast.makeText(editEvent.this, "Failed to update event.", Toast.LENGTH_LONG).show());
 
     }
+
 
     private void deleteEvent() {
         new AlertDialog.Builder(this).setTitle("Delete Event").setMessage("Are you sure you want to delete this event?").setPositiveButton("Yes", (dialog, which) -> {
