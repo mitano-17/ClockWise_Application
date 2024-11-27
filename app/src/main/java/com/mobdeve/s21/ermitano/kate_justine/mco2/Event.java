@@ -2,6 +2,9 @@ package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.google.firebase.firestore.IgnoreExtraProperties;
+
+@IgnoreExtraProperties
 public class Event {
     private String eventName;
     private String startDate;
@@ -9,6 +12,8 @@ public class Event {
     private String endDate;
     private String endTime;
     private String numAttendees;
+
+    public Event() {}
 
     public Event(String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees) {
         this.eventName = eventName;
