@@ -11,14 +11,15 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder>{
+public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder> {
     private Context context;
-    private ArrayList<course> course;
+    private List<Event> eventList;
 
-    public dashboard_adapter(Context context, ArrayList<course> course) {
+    public dashboard_adapter(Context context, List<Event> eventList) {
         this.context = context;
-        this.course = course;
+        this.eventList = eventList != null ? eventList : new ArrayList<>();
     }
 
     @NonNull
@@ -29,30 +30,32 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder
 
     @Override
     public void onBindViewHolder(@NonNull dashboard_viewholder holder, int position) {
-        course currentCourse = course.get(position);
+        Event currentEvent = eventList.get(position);
 
-        holder.courseTv.setText(currentCourse.getCourseTitle());
-        holder.dayTv.setText(currentCourse.getCourseDay());
-        holder.timeTv.setText(currentCourse.getCourseTime());
-        String colorHex = currentCourse.getCourseColour();
-        holder.itemView.setBackgroundColor(Color.parseColor(colorHex));
+        // Bind data to the views
+        holder.courseTv.setText(currentEvent.getEventName());
+        holder.dayTv.setText(currentEvent.getStartDate() + " - " + currentEvent.getEndDate());
+        holder.timeTv.setText(currentEvent.getStartTime() + " - " + currentEvent.getEndTime());
 
-        // Set click listener for each card
+        // Add click listener for each event
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Check the course title and navigate to the appropriate activity
-                if ("GELITPH".equals(currentCourse.getCourseTitle())) {
-                    Intent intent = new Intent(context, attendance.class);
-                    intent.putExtra("courseTitle", currentCourse.getCourseTitle()); // Pass any necessary data
-                    context.startActivity(intent);
-                }
+                // Example: Navigate to an event detail activity
+                Intent intent = new Intent(context, attendance.class);
+                intent.putExtra("eventName", currentEvent.getEventName());
+                intent.putExtra("startDate", currentEvent.getStartDate());
+                intent.putExtra("startTime", currentEvent.getStartTime());
+                intent.putExtra("endDate", currentEvent.getEndDate());
+                intent.putExtra("endTime", currentEvent.getEndTime());
+                intent.putExtra("numAttendees", currentEvent.getNumAttendees());
+                context.startActivity(intent);
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return course.size();
+        return eventList.size();
     }
 }
