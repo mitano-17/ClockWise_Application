@@ -16,12 +16,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class dashboard extends AppCompatActivity {
 
     private RecyclerView eventsRecycler;
     private dashboard_adapter myAdapter;
     private ArrayList<course> courseList;
+    private List<Event> eventList = new ArrayList<>();
     private TextView textView; // Greeting TextView
 
     private FirebaseAuth auth;
@@ -45,12 +47,28 @@ public class dashboard extends AppCompatActivity {
         eventsRecycler = findViewById(R.id.EventsRv);
         eventsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
-        // Fill course list
-        courseList = placeholderData.generateCourseData();
+        // Fetch events from Firestore and populate the RecyclerView
+        firestore.collection("events")
+                .get()
+                .addOnSuccessListener(queryDocumentSnapshots -> {
+                    if (!queryDocumentSnapshots.isEmpty()) {
+                        // Map Firestore documents to Event objects
+                        List<Event> events = queryDocumentSnapshots.toObjects(Event.class);
 
-        // Fill RecyclerView data
-        myAdapter = new dashboard_adapter(this, courseList);
+                        // Update the adapter and RecyclerView
+                        eventList.clear();
+                        eventList.addAll(events);
+                        myAdapter.notifyDataSetChanged();
+                    }
+                })
+                .addOnFailureListener(e -> {
+                    Toast.makeText(this, "Failed to load events: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
+
+        // Set the adapter
+        myAdapter = new dashboard_adapter(this, eventList);
         eventsRecycler.setAdapter(myAdapter);
+
 
         // Create event button
         Button createBtn = findViewById(R.id.createEventBtn);
