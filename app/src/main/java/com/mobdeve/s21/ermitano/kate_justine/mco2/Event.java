@@ -30,7 +30,6 @@ public class Event {
         this.eventType = eventType;
     }
 
-    // Getters and setters
     public String getEventName() { return eventName; }
     public String getStartDate() { return startDate; }
     public String getStartTime() { return startTime; }

@@ -17,19 +17,28 @@ import android.app.TimePickerDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class editEvent extends AppCompatActivity {
+
+    private EditText eEventTitleTv, eStartDateTv, eStartTimeTv, eEndDateTv, eEndTimeTv, eNumAttendees;
+    private ChipGroup chipGroup;
+    private ImageView addIcon, colorPickerImg;
+    String eventId;
+
     private FirebaseFirestore db;
     int defaultColor;
-    String eventId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,31 +56,38 @@ public class editEvent extends AppCompatActivity {
         String endTime = intent.getStringExtra("endTime");
         String numAtendees = intent.getStringExtra("numAtendees");
 
-        EditText eEventTitleTv = findViewById(R.id.EventTitleInput);
+        eEventTitleTv = findViewById(R.id.EventTitleInput);
         eEventTitleTv.setText(eventName);
-        EditText eStartDateTv = findViewById(R.id.startDateTv);
+        eStartDateTv = findViewById(R.id.startDateTv);
         eStartDateTv.setText(startDate);
-        EditText eStartTimeTv = findViewById(R.id.startTimeTv);
+        eStartTimeTv = findViewById(R.id.startTimeTv);
         eStartTimeTv.setText(startTime);
-        EditText eEndDateTv = findViewById(R.id.endDateTv);
+        eEndDateTv = findViewById(R.id.endDateTv);
         eEndDateTv.setText(endDate);
-        EditText eEndTimeTv = findViewById(R.id.endTimeTv);
+        eEndTimeTv = findViewById(R.id.endTimeTv);
         eEndTimeTv.setText(endTime);
-        EditText eNumAtendees = findViewById(R.id.NumTv);
-        eNumAtendees.setText(numAtendees);
-        ChipGroup chipGroup = findViewById(R.id.chipGroup);
-        ImageView addIcon = findViewById(R.id.addIcon);
-        ImageView colorPickerImg = findViewById(R.id.imageView2);
+        eNumAttendees = findViewById(R.id.NumTv);
+        eNumAttendees.setText(numAtendees);
+        chipGroup = findViewById(R.id.chipGroup);
+        addIcon = findViewById(R.id.addIcon);
+        colorPickerImg = findViewById(R.id.imageView2);
+
+        //Start Date picker
         eStartDateTv.setOnClickListener(view -> datePicker(eStartDateTv));
+        //End date picker
         eEndDateTv.setOnClickListener(view -> datePicker(eEndDateTv));
+        //Start time picker
         eStartTimeTv.setOnClickListener(view -> timePicker(eStartTimeTv));
+        //End time picker
         eEndTimeTv.setOnClickListener(view -> timePicker(eEndTimeTv));
+        //Add event type
         addIcon.setOnClickListener(view -> showEventTypeDialog(chipGroup));
 
-
+        // Save event changes
         FloatingActionButton saveBt = findViewById(R.id.saveBt);
         saveBt.setOnClickListener(v -> saveChanges());
 
+        //Delete event
         FloatingActionButton trashBt = findViewById(R.id.trashBt);
         trashBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -80,6 +96,7 @@ public class editEvent extends AppCompatActivity {
             }
         });
 
+        // Back to previous screen
         ImageView backBtn = findViewById(R.id.backImg2);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,6 +105,7 @@ public class editEvent extends AppCompatActivity {
             }
         });
 
+        //Color scheme dialog box
         defaultColor = ContextCompat.getColor(editEvent.this, com.google.android.material.R.color.design_default_color_primary);
         colorPickerImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,19 +117,12 @@ public class editEvent extends AppCompatActivity {
 
     private void saveChanges() {
 
-        EditText eEventTitleTv = findViewById(R.id.EventTitleInput);
-        EditText eStartDateTv = findViewById(R.id.startDateTv);
-        EditText eStartTimeTv = findViewById(R.id.startTimeTv);
-        EditText eEndDateTv = findViewById(R.id.endDateTv);
-        EditText eEndTimeTv = findViewById(R.id.endTimeTv);
-        EditText eNumAtendees = findViewById(R.id.NumTv);
-
         String upEventTitle = eEventTitleTv.getText().toString().trim();
         String upStartDate = eStartDateTv.getText().toString().trim();
         String upStartTime = eStartTimeTv.getText().toString().trim();
         String upEndDate = eEndDateTv.getText().toString().trim();
         String upEndTime = eEndTimeTv.getText().toString().trim();
-        String upNumAttendees = eNumAtendees.getText().toString().trim();
+        String upNumAttendees = eNumAttendees.getText().toString().trim();
         String upColor = String.format("#%06X", (0xFFFFFF & defaultColor));
         RadioGroup radioGroup = findViewById(R.id.radioGroup);
         int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
@@ -142,30 +153,37 @@ public class editEvent extends AppCompatActivity {
             return;
         }
 
-        Event updatedEvent = new Event(upEventTitle, upStartDate, upStartTime, upEndDate, upEndTime, upNumAttendees, upColor, selectedOption, upEventTypes);
+       // Event updatedEvent = new Event(upEventTitle, upStartDate, upStartTime, upEndDate, upEndTime, upNumAttendees, upColor, selectedOption, upEventTypes);
 
-        db.collection("events").document(eventId).set(updatedEvent).addOnSuccessListener(aVoid -> {
-            Toast.makeText(editEvent.this, "Event Updated Successfully.", Toast.LENGTH_SHORT).show();
-            Intent intent = new Intent(editEvent.this, viewEvent.class);
+        Map<String, Object> updatedEvent = new HashMap<>();
+        updatedEvent.put("eventName", upEventTitle);
+        updatedEvent.put("startDate", upStartDate);
+        updatedEvent.put("startTime", upStartTime);
+        updatedEvent.put("endDate", upEndDate);
+        updatedEvent.put("endTime", upEndTime);
+        updatedEvent.put("numAttendees", upNumAttendees);
+        updatedEvent.put("color", upColor);
+        updatedEvent.put("eventTags", upEventTypes);
 
-            intent.putExtra("eventId", eventId);
-            intent.putExtra("eventName", upEventTitle);
-            intent.putExtra("startDate", upStartDate);
-            intent.putExtra("startTime", upStartTime);
-            intent.putExtra("endDate", upEndDate);
-            intent.putExtra("endTime", upEndTime);
-            intent.putExtra("numAtendees", upNumAttendees);
-            intent.putExtra("color", upColor);
-            intent.putExtra("eventTypes", upEventTypes);
-            intent.putExtra("receiveAlert", selectedOption);
+        db.collection("events").document(eventId).update(updatedEvent)
+                .addOnSuccessListener(aVoid -> {
+                Toast.makeText(editEvent.this, "Event Updated Successfully.", Toast.LENGTH_SHORT).show();
 
-            startActivity(intent);
-            finish();
+                Intent intent = new Intent(editEvent.this, viewEvent.class);
+                intent.putExtra("eventId", eventId);
+                intent.putExtra("eventName", upEventTitle);
+                intent.putExtra("startDate", upStartDate);
+                intent.putExtra("startTime", upStartTime);
+                intent.putExtra("endDate", upEndDate);
+                intent.putExtra("endTime", upEndTime);
+                intent.putExtra("numAttendees", upNumAttendees);
+                intent.putExtra("color", upColor);
+                intent.putExtra("eventTags", upEventTypes);
+                setResult(RESULT_OK, intent);
+                finish();
         }).addOnFailureListener(e -> {
             Toast.makeText(editEvent.this, "Error in updating the event.", Toast.LENGTH_SHORT).show();
         });
-
-
 
     }
 

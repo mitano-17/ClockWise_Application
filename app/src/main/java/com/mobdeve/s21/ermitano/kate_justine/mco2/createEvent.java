@@ -38,7 +38,6 @@ public class createEvent extends AppCompatActivity {
         setContentView(R.layout.createevent_layout);
 
         EdgeToEdge.enable(this);
-
         EditText cEventTitleTv = findViewById(R.id.EventTitleInput);
         EditText cStartDateTv = findViewById(R.id.startDateTv);
         EditText cStartTimeTv = findViewById(R.id.startTimeTv);
@@ -77,7 +76,7 @@ public class createEvent extends AppCompatActivity {
                 }
                 String cEventTypes = tagsBuilder.toString();
 
-                if (cEventTypes.endsWith(",")) {
+                if (cEventTypes.endsWith(" ")) {
                     cEventTypes= cEventTypes.substring(0, cEventTypes.length() - 1);
                 }
 
@@ -126,6 +125,7 @@ public class createEvent extends AppCompatActivity {
                 String eventTypes = cEventTypes;
                 db.collection("events")
                         .add(event).addOnSuccessListener(documentReference -> {
+                            String eventId = documentReference.getId();
                             Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(createEvent.this, viewEvent.class);
 
@@ -160,7 +160,7 @@ public class createEvent extends AppCompatActivity {
         BackBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               finish();
+                finish();
             }
         });
 
@@ -228,20 +228,20 @@ public class createEvent extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Enter Event Type").setView(input).setPositiveButton("Add", (dialog, which) -> {
-            String newTag = input.getText().toString().trim();
-            if (!newTag.isEmpty()) {
+                    String newTag = input.getText().toString().trim();
+                    if (!newTag.isEmpty()) {
 
-                Chip newChip = new Chip(this);
-                newChip.setText(newTag);
-                newChip.setCloseIconVisible(true);
-                newChip.setOnCloseIconClickListener(v -> {
-                    chipGroup.removeView(newChip);
-                });
-                chipGroup.addView(newChip);
-            }else {
-                Toast.makeText(this, "Please enter a type", Toast.LENGTH_SHORT).show();
-            }
-        })
+                        Chip newChip = new Chip(this);
+                        newChip.setText(newTag);
+                        newChip.setCloseIconVisible(true);
+                        newChip.setOnCloseIconClickListener(v -> {
+                            chipGroup.removeView(newChip);
+                        });
+                        chipGroup.addView(newChip);
+                    }else {
+                        Toast.makeText(this, "Please enter a type", Toast.LENGTH_SHORT).show();
+                    }
+                })
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                 .create()
                 .show();
