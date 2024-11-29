@@ -18,6 +18,8 @@ import android.app.TimePickerDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -25,8 +27,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
+import org.checkerframework.checker.units.qual.A;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -36,9 +44,11 @@ public class editEvent extends AppCompatActivity {
     private EditText eEventTitleTv, eStartDateTv, eStartTimeTv, eEndDateTv, eEndTimeTv, eNumAttendees, eColor, eReceiveAlert, eEventType;
     private ChipGroup chipGroup;
     private ImageView addIcon, colorPickerImg;
-    String eventId;
-
+    private String userId, eventId, eventName, eventType, startDate, startTime, endDate, endTime, numAttendees, color, receiveAlert;
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
+    private RadioButton bt1, bt2,bt3;
+    int selectedRadioButtonId;
     int defaultColor;
 
     @Override
@@ -47,15 +57,20 @@ public class editEvent extends AppCompatActivity {
         setContentView(R.layout.editevent_layout);
 
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         Intent intent = getIntent();
+        userId = intent.getStringExtra("userId");
         eventId = intent.getStringExtra("eventId");
-        String eventName = intent.getStringExtra("eventName");
-        String startDate = intent.getStringExtra("startDate");
-        String startTime = intent.getStringExtra("startTime");
-        String endDate = intent.getStringExtra("endDate");
-        String endTime = intent.getStringExtra("endTime");
-        String numAttendees = intent.getStringExtra("numAttendees");
+        eventName = intent.getStringExtra("eventName");
+        startDate = intent.getStringExtra("startDate");
+        startTime = intent.getStringExtra("startTime");
+        endDate = intent.getStringExtra("endDate");
+        endTime = intent.getStringExtra("endTime");
+        numAttendees = intent.getStringExtra("numAttendees");
+        eventType = intent.getStringExtra("eventType");
+        receiveAlert = intent.getStringExtra("receiveAlert");
+        color = intent.getStringExtra("color");
 
         eEventTitleTv = findViewById(R.id.EventTitleInput);
         eStartDateTv = findViewById(R.id.startDateTv);
@@ -66,13 +81,11 @@ public class editEvent extends AppCompatActivity {
         chipGroup = findViewById(R.id.chipGroup);
         addIcon = findViewById(R.id.addIcon);
         colorPickerImg = findViewById(R.id.imageView2);
-
-        eEventTitleTv.setText(eventName);
-        eStartDateTv.setText(startDate);
-        eStartTimeTv.setText(startTime);
-        eEndDateTv.setText(endDate);
-        eEndTimeTv.setText(endTime);
-        eNumAttendees.setText(numAttendees);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+        bt1 = findViewById(R.id.radioButton);
+        bt2 = findViewById(R.id.radioButton2);
+        bt3 = findViewById(R.id.radioButton3);
+        selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
 
         //Start Date picker
         eStartDateTv.setOnClickListener(view -> datePicker(eStartDateTv));
@@ -85,38 +98,70 @@ public class editEvent extends AppCompatActivity {
         //Add event type
         addIcon.setOnClickListener(view -> showEventTypeDialog(chipGroup));
 
+        loadEvent();
+
         // Save event changes
         FloatingActionButton saveBt = findViewById(R.id.saveBt);
         saveBt.setOnClickListener(v -> saveChanges());
 
         //Delete event
         FloatingActionButton trashBt = findViewById(R.id.trashBt);
-        trashBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteEvent();
-            }
-        });
+        trashBt.setOnClickListener(v -> deleteEvent());
 
         // Back to previous screen
         ImageView backBtn = findViewById(R.id.backImg2);
-        backBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
+        backBtn.setOnClickListener(v -> finish());
 
         //Color scheme dialog box
         defaultColor = ContextCompat.getColor(editEvent.this, com.google.android.material.R.color.design_default_color_primary);
-        colorPickerImg.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                openColorPicker();
-            }
-        });
+        colorPickerImg.setOnClickListener(v -> openColorPicker());
+
     }
 
+    //loads initial details
+    private void loadEvent(){
+        String userId = auth.getCurrentUser().getUid();
+
+        db.collection("users").document(userId).collection("events").document(eventId)
+                .get().addOnSuccessListener(document -> {
+                    if(document.exists()){
+                        eEventTitleTv.setText(eventName);
+                        eStartDateTv.setText(startDate);
+                        eStartTimeTv.setText(startTime);
+                        eEndDateTv.setText(endDate);
+                        eEndTimeTv.setText(endTime);
+                        eNumAttendees.setText(numAttendees);
+                        receiveAlert =document.getString("receiveAlert");
+                        color = document.getString("color");
+                        if (color != null) {
+                            defaultColor = Color.parseColor(color);
+                            colorPickerImg.setBackgroundColor(defaultColor);
+                        }
+
+                        if (eventType != null && !eventType.isEmpty()) {
+                            String[] tags = eventType.split(" ");
+                            for (String tag : tags) {
+                                Chip chip = new Chip(this);
+                                chip.setText(tag);
+                                chip.setCloseIconVisible(true);
+                                chip.setOnCloseIconClickListener(v -> chipGroup.removeView(chip));
+                                chipGroup.addView(chip);
+                            }
+                        }
+                        if ("1 hour before event".equals(receiveAlert)) {
+                            bt1.setChecked(true);
+                        } else if ("1 day before event".equals(receiveAlert)) {
+                            bt2.setChecked(true);
+                        } else if ("Never".equals(receiveAlert)) {
+                            bt3.setChecked(true);
+                        }
+                    }else{
+                        Toast.makeText(this, "Event data not found.", Toast.LENGTH_SHORT).show();
+                    }
+                }).addOnFailureListener(e -> Toast.makeText(this, "Failed to load event", Toast.LENGTH_SHORT).show());
+    }
+
+    //method to save the updates and input validations
     private void saveChanges() {
         String upEventTitle = eEventTitleTv.getText().toString();
         String upStartDate = eStartDateTv.getText().toString();
@@ -125,9 +170,9 @@ public class editEvent extends AppCompatActivity {
         String upEndTime = eEndTimeTv.getText().toString();
         String upNumAttendees = eNumAttendees.getText().toString();
         String upColor = String.format("#%06X", (0xFFFFFF & defaultColor));
-        StringBuilder tagsBuilder = new StringBuilder();
 
-        // Collect chip tags
+        //For collecting event types
+        StringBuilder tagsBuilder = new StringBuilder();
         for (int i = 0; i < chipGroup.getChildCount(); i++) {
             Chip chip = (Chip) chipGroup.getChildAt(i);
             tagsBuilder.append(chip.getText().toString()).append(" ");
@@ -140,18 +185,45 @@ public class editEvent extends AppCompatActivity {
             Toast.makeText(editEvent.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+
+        try {
+            Date startDate = dateFormat.parse(upStartDate);
+            Date endDate = dateFormat.parse(upEndDate);
+            Date startTime = timeFormat.parse(upStartTime);
+            Date endTime = timeFormat.parse(upEndTime);
+
+            if (endDate.before(startDate)) {
+                eEndDateTv.setError("Event End Date must not be earlier than Start Date.");
+                return;
+            }
+            if (startDate.equals(endDate)) {
+                if (endTime.before(startTime)) {
+                    eEndTimeTv.setError("Event End Time must not be earlier than Start Time");
+                    return;
+                }
+            }
+        }catch (ParseException e){
+            Toast.makeText(this, "Invalid Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if (chipGroup.getChildCount() == 0) {
             Toast.makeText(editEvent.this, "Please add at least one event type tag.", Toast.LENGTH_SHORT).show();
             return;
         }
-
-        if (eventId == null || eventId.isEmpty()) {
-            Toast.makeText(this, "Event ID is missing.", Toast.LENGTH_SHORT).show();
+        if (userId == null || userId.isEmpty() || eventId == null || eventId.isEmpty()) {
+            Toast.makeText(this, "Event ID or User ID is missing.", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (selectedRadioButtonId == -1) {
+            Toast.makeText(editEvent.this, "Please select only one alert option.", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Prepare updated event data
+        String userId = auth.getCurrentUser().getUid();
         Map<String, Object> updatedEvent = new HashMap<>();
         updatedEvent.put("eventName", upEventTitle);
         updatedEvent.put("startDate", upStartDate);
@@ -160,35 +232,45 @@ public class editEvent extends AppCompatActivity {
         updatedEvent.put("endTime", upEndTime);
         updatedEvent.put("numAttendees", upNumAttendees);
         updatedEvent.put("color", upColor);
-        updatedEvent.put("eventTags", upEventTypes);
-
-        Log.d("FirestoreUpdate", "Event ID: " + eventId);
-        Log.d("FirestoreUpdate", "Updated Data: " + updatedEvent);
-
+        updatedEvent.put("eventType", upEventTypes);
 
         // Update Firestore
-        db.collection("events").document(eventId).update(updatedEvent)
+        db.collection("users").document(userId).collection("events").document(eventId)
+                .update(updatedEvent)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(this, "Event Updated Successfully.", Toast.LENGTH_SHORT).show();
-                    setResult(RESULT_OK);
+                    Intent result = new Intent();
+                    result.putExtra("eventName", upEventTitle);
+                    result.putExtra("startDate", upStartDate);
+                    result.putExtra("startTime", upStartTime);
+                    result.putExtra("endDate", upEndDate);
+                    result.putExtra("numAttendees", upNumAttendees);
+                    result.putExtra("endTime", upEndTime);
+                    result.putExtra("color", upColor);
+                    result.putExtra("eventType", upEventTypes);
+
+                    setResult(RESULT_OK, result);
                     finish();
                 })
                 .addOnFailureListener(e -> Toast.makeText(editEvent.this, "Failed to update event.", Toast.LENGTH_LONG).show());
 
     }
 
-
+// method to delete the event
     private void deleteEvent() {
         new AlertDialog.Builder(this).setTitle("Delete Event").setMessage("Are you sure you want to delete this event?").setPositiveButton("Yes", (dialog, which) -> {
-            db.collection("events").document(eventId).delete().addOnSuccessListener(aVoid -> {
-                Toast.makeText(editEvent.this, "Event Deleted.", Toast.LENGTH_SHORT).show();
-                finish();
-            }).addOnFailureListener(e -> {
-                Toast.makeText(editEvent.this, "Failed to delete the event.", Toast.LENGTH_SHORT).show();
-            });
+            db.collection("users").document(userId).collection("events").document(eventId)
+                    .delete()
+                    .addOnSuccessListener(aVoid -> {
+                        Toast.makeText(editEvent.this, "Event Deleted.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(editEvent.this, "Failed to delete the event.", Toast.LENGTH_SHORT).show();
+                    });
         }).setNegativeButton("No", null).show();
     }
 
+    // opens the color picker dialog
     public void openColorPicker() {
         ImageView colorPickerImg = findViewById(R.id.imageView2);
         AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
@@ -206,7 +288,8 @@ public class editEvent extends AppCompatActivity {
         ambilWarnaDialog.show();
     }
 
-    private void datePicker(EditText dateInput) {
+    //opens the date picker dialog
+    private void datePicker(EditText dateInput){
 
         Calendar calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
@@ -215,13 +298,17 @@ public class editEvent extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, ((view, year1, month1, dayOfMonth) -> {
 
-            String formatDate = (month1 + 1) + "/" + dayOfMonth + "/" + year1;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+            calendar.set(year1, month1, dayOfMonth);
+
+            String formatDate = dateFormat.format(calendar.getTime());
             dateInput.setText(formatDate);
         }), year, month, day);
 
         datePickerDialog.show();
     }
 
+    //opens the time picker dialog
     private void timePicker(EditText timeInput) {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
@@ -238,6 +325,7 @@ public class editEvent extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    //opens the event type dialog
     private void showEventTypeDialog(ChipGroup chipGroup) {
         final EditText input = new EditText(this);
         input.setHint("Enter Event Type");

@@ -6,6 +6,8 @@ import com.google.firebase.firestore.IgnoreExtraProperties;
 
 @IgnoreExtraProperties
 public class Event {
+    private String userId;
+    private String eventId;
     private String eventName;
     private String startDate;
     private String startTime;
@@ -18,7 +20,9 @@ public class Event {
 
     public Event() {}
 
-    public Event(String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType) {
+    public Event(String userId, String eventId, String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType) {
+        this.userId = userId;
+        this.eventId = eventId;
         this.eventName = eventName;
         this.startDate = startDate;
         this.startTime = startTime;
@@ -30,6 +34,8 @@ public class Event {
         this.eventType = eventType;
     }
 
+    public String getUserId(){ return userId; }
+    public String getEventId(){ return eventId; }
     public String getEventName() { return eventName; }
     public String getStartDate() { return startDate; }
     public String getStartTime() { return startTime; }

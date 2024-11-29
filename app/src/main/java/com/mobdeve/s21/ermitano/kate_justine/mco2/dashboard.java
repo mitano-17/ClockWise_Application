@@ -38,6 +38,7 @@ public class dashboard extends AppCompatActivity {
         // Initialize Firebase instances
         auth = FirebaseAuth.getInstance();
         firestore = FirebaseFirestore.getInstance();
+        String userId = auth.getCurrentUser().getUid();
 
         // Set greeting with full name
         textView = findViewById(R.id.nameGreetTv);
@@ -48,7 +49,7 @@ public class dashboard extends AppCompatActivity {
         eventsRecycler.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
         // Fetch events from Firestore and populate the RecyclerView
-        firestore.collection("events")
+        firestore.collection("users").document(userId).collection("events")
                 .get()
                 .addOnSuccessListener(queryDocumentSnapshots -> {
                     if (!queryDocumentSnapshots.isEmpty()) {

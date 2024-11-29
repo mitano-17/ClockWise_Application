@@ -19,10 +19,16 @@ import androidx.core.content.ContextCompat;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Locale;
+import java.util.Date;
+import java.util.Set;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
 
@@ -30,14 +36,20 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 public class createEvent extends AppCompatActivity {
 
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
     int defaultColor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.createevent_layout);
-
         EdgeToEdge.enable(this);
+
+        //Initialize Firestore and FirebaseAuth
+        db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
+
+        //Initialize UI elements
         EditText cEventTitleTv = findViewById(R.id.EventTitleInput);
         EditText cStartDateTv = findViewById(R.id.startDateTv);
         EditText cStartTimeTv = findViewById(R.id.startTimeTv);
@@ -47,106 +59,145 @@ public class createEvent extends AppCompatActivity {
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
         ImageView addIcon = findViewById(R.id.addIcon);
         ImageView colorPickerImg = findViewById(R.id.colorPicker);
+        RadioGroup radioGroup = findViewById(R.id.radioGroup);
+
+        //click listeners for the elements
+        FloatingActionButton createEventBt = findViewById(R.id.createEvntBt);
         cStartDateTv.setOnClickListener(view -> datePicker(cStartDateTv));
         cEndDateTv.setOnClickListener(view -> datePicker(cEndDateTv));
         cStartTimeTv.setOnClickListener(view -> timePicker(cStartTimeTv));
         cEndTimeTv.setOnClickListener(view -> timePicker(cEndTimeTv));
         addIcon.setOnClickListener(view -> showEventTypeDialog(chipGroup));
-        FloatingActionButton createEventBt = findViewById(R.id.createEvntBt);
-        createEventBt.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                db = FirebaseFirestore.getInstance();
-                String cEventName = cEventTitleTv.getText().toString().trim();
-                String cStartDate = cStartDateTv.getText().toString().trim();
-                String cStartTime = cStartTimeTv.getText().toString().trim();
-                String cEndDate = cEndDateTv.getText().toString().trim();
-                String cEndTime = cEndTimeTv.getText().toString().trim();
-                String cNum = cNumTv.getText().toString().trim();
-                String cColor = String.format("#%06X", (0xFFFFFF & defaultColor));
-                RadioGroup radioGroup = findViewById(R.id.radioGroup);
-                int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+        //click listener for creating the event
+        createEventBt.setOnClickListener(view -> {
 
-                ChipGroup chipGroup = findViewById(R.id.chipGroup);
-                StringBuilder tagsBuilder = new StringBuilder();
-                for (int i = 0; i < chipGroup.getChildCount(); i++) {
-                    Chip chip = (Chip) chipGroup.getChildAt(i);
-                    tagsBuilder.append(chip.getText().toString()).append(" ");
-                }
-                String cEventTypes = tagsBuilder.toString();
+            //gathers user input
+            String userId = auth.getCurrentUser().getUid();
+            String cEventName = cEventTitleTv.getText().toString().trim();
+            String cStartDate = cStartDateTv.getText().toString().trim();
+            String cStartTime = cStartTimeTv.getText().toString().trim();
+            String cEndDate = cEndDateTv.getText().toString().trim();
+            String cEndTime = cEndTimeTv.getText().toString().trim();
+            String cNum = cNumTv.getText().toString().trim();
+            String cColor = String.format("#%06X", (0xFFFFFF & defaultColor));
 
-                if (cEventTypes.endsWith(" ")) {
-                    cEventTypes= cEventTypes.substring(0, cEventTypes.length() - 1);
-                }
+            //retrieve selected radio button text
+            int selectedRadioButtonId = radioGroup.getCheckedRadioButtonId();
+            RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
+            String selectedOption = selectedRadioButton.getText().toString();
 
-                if(cEventName.isEmpty()){
-                    cEventTitleTv.setError("Event Title cannot be empty.");
-                    return;
-                }
-                if(cStartDate.isEmpty()){
-                    cStartDateTv.setError("Event Start Date cannot be empty.");
-                    return;
-                }
-                if(cStartTime.isEmpty()){
-                    cStartTimeTv.setError("Event Start Time cannot be empty");
-                    return;
-                }
-                if(cEndDate.isEmpty()){
-                    cEndDateTv.setError("Event End Date cannot be empty");
-                    return;
-                }
-                if(cEndTime.isEmpty()){
-                    cEndTimeTv.setError("Event End Time cannot be empty");
-                    return;
-                }
-                if(cNum.isEmpty()){
-                    cNumTv.setError("Please indicate the number of attendees.");
-                    return;
-                }
-                if (chipGroup.getChildCount() == 0) {
-                    Toast.makeText(createEvent.this, "Please add at least one event type tag.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if (selectedRadioButtonId == -1) {
-                    Toast.makeText(createEvent.this, "Please select a receive alert option.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(cColor.equals("#FFFFFF")){
-                    Toast.makeText(createEvent.this, "Please select an icon color.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                RadioButton selectedRadioButton = findViewById(selectedRadioButtonId);
-                String selectedOption = selectedRadioButton.getText().toString();
-
-                Event event = new Event(cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes);
-
-                String eventTypes = cEventTypes;
-                db.collection("events")
-                        .add(event).addOnSuccessListener(documentReference -> {
-                            String eventId = documentReference.getId();
-                            Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
-                            Intent intent = new Intent(createEvent.this, viewEvent.class);
-
-                            intent.putExtra("eventName", cEventName);
-                            intent.putExtra("startDate", cStartDate);
-                            intent.putExtra("startTime", cStartTime);
-                            intent.putExtra("endDate", cEndDate);
-                            intent.putExtra("endTime", cEndTime);
-                            intent.putExtra("numAtendees", cNum);
-                            intent.putExtra("color", cColor);
-                            intent.putExtra("receiveAlert", selectedOption);
-                            intent.putExtra("eventTags", eventTypes);
-
-                            startActivity(intent);
-
-                        }).addOnFailureListener(e -> {
-                            Toast.makeText(createEvent.this, "Error in creating event.", Toast.LENGTH_SHORT).show();
-                        });
+            //gather event tags
+            StringBuilder tagsBuilder = new StringBuilder();
+            Set<String> eventTags = new HashSet<>();
+            for (int i = 0; i < chipGroup.getChildCount(); i++) {
+                Chip chip = (Chip) chipGroup.getChildAt(i);
+                eventTags.add(chip.getText().toString().trim());
             }
+            for(String event: eventTags){
+                tagsBuilder.append(event).append(" ");
+            }
+            String cEventTypes = tagsBuilder.toString().trim();
+
+            //validate inputs
+            if (cEventTypes.endsWith(" ")) {
+                cEventTypes= cEventTypes.substring(0, cEventTypes.length() - 1);
+            }
+
+            if(cEventName.isEmpty()){
+                cEventTitleTv.setError("Event Title cannot be empty.");
+                return;
+            }
+
+            if(cStartDate.isEmpty()){
+                cStartDateTv.setError("Event Start Date cannot be empty.");
+                return;
+            }
+            if(cStartTime.isEmpty()){
+                cStartTimeTv.setError("Event Start Time cannot be empty");
+                return;
+            }
+            if(cEndDate.isEmpty()){
+                cEndDateTv.setError("Event End Date cannot be empty");
+                return;
+            }
+            if(cEndTime.isEmpty()){
+                cEndTimeTv.setError("Event End Time cannot be empty");
+                return;
+            }
+
+            //validate date and time input
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+            SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+
+            try {
+                Date startDate = dateFormat.parse(cStartDate);
+                Date endDate = dateFormat.parse(cEndDate);
+                Date startTime = timeFormat.parse(cStartTime);
+                Date endTime = timeFormat.parse(cEndTime);
+
+                if (endDate.before(startDate)) {
+                    cEndDateTv.setError("Event End Date must not be earlier than Start Date.");
+                    return;
+                }
+                if (startDate.equals(endDate)) {
+                    if (endTime.before(startTime)) {
+                        cEndTimeTv.setError("Event End Time must not be earlier than Start Time");
+                        return;
+                    }
+                }
+            }catch (ParseException e){
+                Toast.makeText(this, "Invalid Date", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            if(cNum.isEmpty()){
+                cNumTv.setError("Please indicate the number of attendees.");
+                return;
+            }
+            if (chipGroup.getChildCount() == 0) {
+                Toast.makeText(createEvent.this, "Please add at least one event type tag.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if (selectedRadioButtonId == -1) {
+                Toast.makeText(createEvent.this, "Please select a receive alert option.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+            if(cColor.equals("#FFFFFF")){
+                Toast.makeText(createEvent.this, "Please select an icon color.", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            //Create event object
+            String eventTypes = cEventTypes;
+            Event event = new Event(userId, null, cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes);
+            db.collection("users").document(userId).collection("events")
+                    .add(event).addOnSuccessListener(documentReference -> {
+                        String eventId = documentReference.getId();
+                        Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(createEvent.this, viewEvent.class);
+
+                        intent.putExtra("userId", userId);
+                        intent.putExtra("eventId", eventId);
+                        intent.putExtra("eventName", cEventName);
+                        intent.putExtra("startDate", cStartDate);
+                        intent.putExtra("startTime", cStartTime);
+                        intent.putExtra("endDate", cEndDate);
+                        intent.putExtra("endTime", cEndTime);
+                        intent.putExtra("numAttendees", cNum);
+                        intent.putExtra("color", cColor);
+                        intent.putExtra("receiveAlert", selectedOption);
+                        intent.putExtra("eventType", eventTypes);
+
+                        startActivity(intent);
+
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(createEvent.this, "Error in creating event.", Toast.LENGTH_SHORT).show();
+                    });
+
         });
 
+        //click listener for generating qr button
         Button generateQR = findViewById(R.id.genQRBt);
         generateQR.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,6 +207,7 @@ public class createEvent extends AppCompatActivity {
             }
         });
 
+        //click listener for back button
         ImageView BackBt = findViewById(R.id.backImgVw);
         BackBt.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -164,6 +216,7 @@ public class createEvent extends AppCompatActivity {
             }
         });
 
+        //default color and click listener for the color picker dialog box
         defaultColor = ContextCompat.getColor(createEvent.this, com.google.android.material.R.color.design_default_color_primary);
         colorPickerImg.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -174,6 +227,7 @@ public class createEvent extends AppCompatActivity {
 
     }
 
+    //opens the color picker dialog box
     public void openColorPicker(){
         ImageView colorPickerImg = findViewById(R.id.colorPicker);
         AmbilWarnaDialog ambilWarnaDialog = new AmbilWarnaDialog(this, defaultColor, new AmbilWarnaDialog.OnAmbilWarnaListener() {
@@ -190,6 +244,7 @@ public class createEvent extends AppCompatActivity {
         ambilWarnaDialog.show();
     }
 
+    //opens the date picker dialog box
     private void datePicker(EditText dateInput){
 
         Calendar calendar = Calendar.getInstance();
@@ -199,13 +254,17 @@ public class createEvent extends AppCompatActivity {
 
         DatePickerDialog datePickerDialog = new DatePickerDialog(this, ((view, year1, month1, dayOfMonth) -> {
 
-            String formatDate = (month1 + 1) + "/" + dayOfMonth + "/" + year1;
+            SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+            calendar.set(year1, month1, dayOfMonth);
+
+            String formatDate = dateFormat.format(calendar.getTime());
             dateInput.setText(formatDate);
         }), year, month, day);
 
         datePickerDialog.show();
     }
 
+    //opens the time picker dialog box
     private void timePicker (EditText timeInput){
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR);
@@ -222,6 +281,7 @@ public class createEvent extends AppCompatActivity {
         timePickerDialog.show();
     }
 
+    //opens the event type dialog box
     private void showEventTypeDialog(ChipGroup chipGroup) {
         final EditText input = new EditText(this);
         input.setHint("Enter Event Type");
@@ -246,4 +306,26 @@ public class createEvent extends AppCompatActivity {
                 .create()
                 .show();
     }
-}
+
+    /*private boolean validFormat(String startDate, String startTime, String endDate, String endTime){
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+
+        timeFormat.setLenient(false);
+        dateFormat.setLenient(false);
+
+        try {
+
+            timeFormat.parse(startTime);
+            timeFormat.parse(endTime);
+            dateFormat.parse(startDate);
+            dateFormat.parse(endDate);
+
+            return true;
+        } catch (ParseException e) {
+            Toast.makeText(this, "Invalid date or time format. Please double click the space to select.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }*/
+    }
+

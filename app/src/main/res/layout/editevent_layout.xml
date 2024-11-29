@@ -186,7 +186,6 @@
                 android:background="#F4EFEF"
                 android:backgroundTint="#EEE9F0"
                 android:fontFamily="@font/lexend_medium"
-                android:hint=" 34"
                 android:textSize="14sp" />
 
         </LinearLayout>
@@ -200,7 +199,7 @@
 
             <TextView
                 android:id="@+id/Iconc"
-                android:layout_width="218dp"
+                android:layout_width="223dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:fontFamily="@font/lexend_medium"
@@ -213,8 +212,7 @@
                 android:layout_height="25dp"
                 android:layout_gravity="end"
                 android:layout_marginEnd="5dp"
-                android:layout_weight="1"
-                app:srcCompat="@drawable/pngegg" />
+                android:layout_weight="1" />
 
         </LinearLayout>
 
@@ -280,81 +278,93 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="411dp"
-        android:layout_height="237dp"
+        android:layout_width="361dp"
+        android:layout_height="257dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        tools:layout_editor_absoluteX="0dp">
+        app:layout_constraintVertical_bias="0.0">
 
-        <TextView
-            android:id="@+id/receiveAlertTv"
-            android:layout_width="289dp"
-            android:layout_height="24dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/lexend_medium"
-            android:text="Receive Alert"
-            android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.368"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.075" />
+        <RadioGroup
+            android:id="@+id/radioGroup"
+            android:layout_width="434dp"
+            android:layout_height="126dp"
+            tools:layout_editor_absoluteX="23dp"
+            tools:layout_editor_absoluteY="2dp">
 
-        <RadioButton
-            android:id="@+id/radioButton"
-            android:layout_width="366dp"
-            android:layout_height="35dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="1 hour before event"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/receiveAlertTv"
-            app:layout_constraintVertical_bias="0.055" />
+            <TextView
+                android:id="@+id/receiveAlertTv"
+                android:layout_width="289dp"
+                android:layout_height="24dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Receive Alert"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.368"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.075" />
 
-        <RadioButton
-            android:id="@+id/radioButton2"
-            android:layout_width="359dp"
-            android:layout_height="34dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="1 day before event"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.865"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+            <RadioButton
+                android:id="@+id/radioButton"
+                android:layout_width="366dp"
+                android:layout_height="35dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="1 hour before event"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/receiveAlertTv"
+                app:layout_constraintVertical_bias="0.055" />
 
-        <RadioButton
-            android:id="@+id/radioButton3"
-            android:layout_width="359dp"
-            android:layout_height="34dp"
-            android:fontFamily="@font/lexend_light"
-            android:text="Never"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.865"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton2"
-            app:layout_constraintVertical_bias="0.0" />
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="359dp"
+                android:layout_height="34dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="1 day before event"
+                android:textSize="12sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.865"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton" />
+
+            <RadioButton
+                android:id="@+id/radioButton3"
+                android:layout_width="359dp"
+                android:layout_height="34dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="Never"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.865"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/radioButton2"
+                app:layout_constraintVertical_bias="0.0" />
+        </RadioGroup>
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/saveBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="81dp"
             android:layout_weight="1"
             android:clickable="true"
             app:backgroundTint="#2196F3"
             app:fabCustomSize="35dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.483"
+            app:layout_constraintHorizontal_bias="0.567"
             app:layout_constraintStart_toEndOf="@+id/trashBt"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton3"
-            app:layout_constraintVertical_bias="0.567"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            app:layout_constraintVertical_bias="0.0"
             app:maxImageSize="15dp"
             app:srcCompat="@drawable/check"
             app:tint="@color/white" />
@@ -363,14 +373,14 @@
             android:id="@+id/trashBt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="312dp"
+            android:layout_marginStart="248dp"
             android:clickable="true"
             app:backgroundTint="#FFFFFF"
             app:fabCustomSize="35dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioButton3"
-            app:layout_constraintVertical_bias="0.567"
+            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
+            app:layout_constraintVertical_bias="1.0"
             app:maxImageSize="15dp"
             app:srcCompat="@drawable/delete"
             app:tint="@color/black" />
