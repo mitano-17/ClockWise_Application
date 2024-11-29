@@ -1,9 +1,13 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -36,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if user is already logged in with Google
         GoogleSignInAccount gAccount = GoogleSignIn.getLastSignedInAccount(this);
-        if (gAccount != null) {
-            // User is logged in with Google, navigate to the main dashboard
-            Intent intent = new Intent(MainActivity.this, dashboard.class);
-            startActivity(intent);
-            finish(); // Prevent user from going back to the intro screen
-        }
+            if (gAccount != null) {
+                // User is logged in with Google, navigate to the main dashboard
+                Intent intent = new Intent(MainActivity.this, dashboard.class);
+                startActivity(intent);
+                finish(); // Prevent user from going back to the intro screen
+            }
+
 
         // Register button click listener
         Button registerActivity = findViewById(R.id.SignUpBtn);
@@ -62,13 +67,19 @@ public class MainActivity extends AppCompatActivity {
                 loginActivity();
             }
         });
+
     }
 
     // Method to switch to the registration page
     private void registerActivity() {
-        // Create intent to start register activity
-        Intent intent = new Intent(this, register.class);
-        startActivity(intent);
+
+        if (!isOnline()) {
+            Toast.makeText(this, "Please connect to the internet to register.", Toast.LENGTH_SHORT).show();
+        } else {
+            // Create intent to start register activity
+            Intent intent = new Intent(this, register.class);
+            startActivity(intent);
+        }
     }
 
     // Method to switch to the login page
@@ -76,5 +87,15 @@ public class MainActivity extends AppCompatActivity {
         // Create intent to start login activity
         Intent intent = new Intent(this, login.class);
         startActivity(intent);
+    }
+
+    private boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        if(cm != null){
+            NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+            return networkInfo != null && networkInfo.isConnected();
+        }
+        return false;
     }
 }

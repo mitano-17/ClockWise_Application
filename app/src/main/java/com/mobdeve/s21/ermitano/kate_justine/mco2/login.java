@@ -1,6 +1,9 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -55,17 +58,31 @@ public class login extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
+                                //when the device is offline, it will direct to the offline dashboard
+                                if(!isOnline()){
+                                    Toast.makeText(login.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(login.this, offlineDashboard.class);
+                                    startActivity(intent);
+
+                                } else {
+                                    //when device is online
+                                    if(task.isSuccessful())
+                                 {
                                     Toast.makeText(login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(login.this, dashboard.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(login.this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }
+                                }}
                             }
                         });
 
             }
         });
+    }
+    private boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
     }
 }
