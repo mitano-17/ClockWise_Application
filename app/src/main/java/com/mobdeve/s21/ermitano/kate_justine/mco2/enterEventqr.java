@@ -1,8 +1,11 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,4 +22,11 @@ public class enterEventqr extends AppCompatActivity {
                 finish();
             }
         });
+
+        TextView eventName = findViewById(R.id.eventName);
+        Intent intent = getIntent();
+        if(intent != null && intent.hasExtra("scannedData")){
+            String eventNameV = intent.getStringExtra("scannedData");
+            eventName.setText(eventNameV);
+        }
 }}
