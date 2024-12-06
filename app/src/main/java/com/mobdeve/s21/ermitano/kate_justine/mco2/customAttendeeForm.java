@@ -2,7 +2,6 @@ package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -53,7 +52,7 @@ public class customAttendeeForm extends AppCompatActivity {
                 return;
             }
 
-            AttendeeForm attendeeForm = new AttendeeForm(userId, eventId, selectedFields, null);
+            attendeeForm attendeeForm = new attendeeForm(userId, eventId, selectedFields, null);
 
             db.collection("users").document(userId).collection("events").document(eventId)
                     .collection("attendeeForm").document("formId").get()
