@@ -128,14 +128,37 @@ public class MainActivity extends AppCompatActivity {
     private void requestLocationPermissions() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(
-                    this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
-                    LOCATION_PERMISSION_REQUEST_CODE
-            );
-        } else {
-            startLocationService();
+
+            // Check if rationale should be shown
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                // Show a custom rationale dialog or a Toast
+                showPermissionRationale();
+            } else {
+                // Directly request permissions
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                        100);
+            }
         }
+    }
+
+    private void showPermissionRationale() {
+        // Show a dialog to explain why the app needs the permissions
+        new AlertDialog.Builder(this)
+                .setTitle("Location Permissions Required")
+                .setMessage("This app needs location permissions to provide geolocation-based services. Please grant these permissions.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Request the permissions after explaining
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                            100);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    // Handle when the user denies permission
+                    Toast.makeText(MainActivity.this, "Location permissions are necessary for this feature.", Toast.LENGTH_SHORT).show();
+                })
+                .show();
     }
 
     @Override
