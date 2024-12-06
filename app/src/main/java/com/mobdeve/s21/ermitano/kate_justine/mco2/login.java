@@ -58,22 +58,18 @@ public class login extends AppCompatActivity {
                         .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
-                                //when the device is offline, it will direct to the offline dashboard
                                 if(!isOnline()){
                                     Toast.makeText(login.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                                    Intent intent = new Intent(login.this, offlineDashboard.class);
+                                    Intent intent = new Intent(login.this, dashboard.class);
                                     startActivity(intent);
 
-                                } else {
-                                    //when device is online
-                                    if(task.isSuccessful())
-                                 {
+                                } else if(task.isSuccessful()) {
                                     Toast.makeText(login.this, "Login Successful", Toast.LENGTH_SHORT).show();
                                     Intent intent = new Intent(login.this, dashboard.class);
                                     startActivity(intent);
                                 } else {
                                     Toast.makeText(login.this, "Login Failed: " + task.getException().getMessage(), Toast.LENGTH_SHORT).show();
-                                }}
+                                }
                             }
                         });
 

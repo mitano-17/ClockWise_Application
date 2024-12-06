@@ -1,8 +1,7 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
-import android.database.sqlite.SQLiteOpenHelper;
-
 import com.google.firebase.firestore.IgnoreExtraProperties;
+import java.util.List;
 
 @IgnoreExtraProperties
 public class Event {
@@ -17,6 +16,7 @@ public class Event {
     private String color;
     private String receiveAlert;
     private String eventType;
+    //private List<String> attendeeFormFields;
 
     public Event() {}
 
@@ -32,6 +32,7 @@ public class Event {
         this.color = color;
         this.receiveAlert = receiveAlert;
         this.eventType = eventType;
+        //this.attendeeFormFields = attendeeFormFields;
     }
 
     public String getUserId(){ return userId; }
@@ -45,4 +46,9 @@ public class Event {
     public String getColor () { return color; }
     public String getReceiveAlert() { return receiveAlert; }
     public String getEventType() { return eventType; }
+    //public List<String> getAttendeeFormFields() { return attendeeFormFields; }
+
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
+    }
 }

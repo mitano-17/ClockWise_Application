@@ -278,11 +278,12 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="361dp"
-        android:layout_height="257dp"
+        android:id="@+id/constraintLayout"
+        android:layout_width="356dp"
+        android:layout_height="127dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.68"
+        app:layout_constraintHorizontal_bias="0.692"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
         app:layout_constraintVertical_bias="0.0">
@@ -350,42 +351,69 @@
                 app:layout_constraintVertical_bias="0.0" />
         </RadioGroup>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/saveBt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="81dp"
-            android:layout_weight="1"
-            android:clickable="true"
-            app:backgroundTint="#2196F3"
-            app:fabCustomSize="35dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.567"
-            app:layout_constraintStart_toEndOf="@+id/trashBt"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-            app:layout_constraintVertical_bias="0.0"
-            app:maxImageSize="15dp"
-            app:srcCompat="@drawable/check"
-            app:tint="@color/white" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/trashBt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="248dp"
-            android:clickable="true"
-            app:backgroundTint="#FFFFFF"
-            app:fabCustomSize="35dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/radioGroup"
-            app:layout_constraintVertical_bias="1.0"
-            app:maxImageSize="15dp"
-            app:srcCompat="@drawable/delete"
-            app:tint="@color/black" />
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/saveBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:layout_marginEnd="16dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        app:backgroundTint="#2196F3"
+        app:fabCustomSize="35dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:maxImageSize="15dp"
+        app:srcCompat="@drawable/check"
+        app:tint="@color/white" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/trashBt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="112dp"
+        android:layout_marginTop="28dp"
+        android:clickable="true"
+        app:backgroundTint="#FFFFFF"
+        app:fabCustomSize="35dp"
+        app:layout_constraintEnd_toStartOf="@+id/saveBt"
+        app:layout_constraintHorizontal_bias="0.65"
+        app:layout_constraintStart_toEndOf="@+id/setLocationBt"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
+        app:maxImageSize="15dp"
+        app:srcCompat="@drawable/delete"
+        app:tint="@color/black" />
+
+    <Button
+        android:id="@+id/setLocationBt"
+        android:layout_width="139dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="28dp"
+        android:layout_weight="1"
+        android:backgroundTint="#ABA8AB"
+        android:fontFamily="@font/lexend_medium"
+        android:text="Set Location"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout" />
+
+    <Button
+        android:id="@+id/cstmAttendee"
+        android:layout_width="139dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="28dp"
+        android:layout_weight="1"
+        android:backgroundTint="#ABA8AB"
+        android:fontFamily="@font/lexend_medium"
+        android:text="Attendee Form"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/setLocationBt" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

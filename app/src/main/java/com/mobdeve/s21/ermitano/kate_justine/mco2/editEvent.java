@@ -18,16 +18,12 @@ import android.app.TimePickerDialog;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.firebase.Firebase;
+
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
-
-import org.checkerframework.checker.units.qual.A;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -185,6 +181,11 @@ public class editEvent extends AppCompatActivity {
             Toast.makeText(editEvent.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
+
+        if (!validFormat(upStartDate, upStartTime, upEndDate, upEndTime)) {
+            return;
+        }
+
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
 
@@ -206,6 +207,16 @@ public class editEvent extends AppCompatActivity {
             }
         }catch (ParseException e){
             Toast.makeText(this, "Invalid Date", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        int numAttendees = Integer.parseInt(upNumAttendees);
+        if(numAttendees < 2 ){
+            eNumAttendees.setError("Number of attendees must be greater than 1");
+            return;
+        }
+        if(numAttendees > 200){
+            eNumAttendees.setError("Number of attendees is limited to 200 attendees only.");
             return;
         }
 
@@ -349,6 +360,27 @@ public class editEvent extends AppCompatActivity {
                 .setNegativeButton("Cancel", (dialog, which) -> dialog.cancel())
                 .create()
                 .show();
+    }
+
+    private boolean validFormat(String startDate, String startTime, String endDate, String endTime){
+        SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
+
+        timeFormat.setLenient(false);
+        dateFormat.setLenient(false);
+
+        try {
+
+            timeFormat.parse(startTime);
+            timeFormat.parse(endTime);
+            dateFormat.parse(startDate);
+            dateFormat.parse(endDate);
+
+            return true;
+        } catch (ParseException e) {
+            Toast.makeText(this, "Invalid date or time format. Please double click the space to select.", Toast.LENGTH_SHORT).show();
+            return false;
+        }
     }
 }
 

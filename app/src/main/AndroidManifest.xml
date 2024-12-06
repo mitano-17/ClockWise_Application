@@ -52,6 +52,10 @@
 
         <activity android:name=".generatedQRcode" android:exported="true" />
 
+        <activity android:name=".customAttendeeForm"/>
+        <activity android:name=".attendeeForm"/>
+        <activity android:name=".viewAttendeeForm"/>
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

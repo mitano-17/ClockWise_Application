@@ -3,7 +3,10 @@ package com.mobdeve.s21.ermitano.kate_justine.mco2;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Locale;
@@ -68,6 +72,9 @@ public class createEvent extends AppCompatActivity {
         cStartTimeTv.setOnClickListener(view -> timePicker(cStartTimeTv));
         cEndTimeTv.setOnClickListener(view -> timePicker(cEndTimeTv));
         addIcon.setOnClickListener(view -> showEventTypeDialog(chipGroup));
+
+
+       Button setLocBt = findViewById(R.id.setLocationBt);
 
         //click listener for creating the event
         createEventBt.setOnClickListener(view -> {
@@ -126,6 +133,9 @@ public class createEvent extends AppCompatActivity {
                 return;
             }
 
+            if (!validFormat(cStartDate, cStartTime, cEndDate, cEndTime)) {
+                return;
+            }
             //validate date and time input
             SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
@@ -155,6 +165,17 @@ public class createEvent extends AppCompatActivity {
                 cNumTv.setError("Please indicate the number of attendees.");
                 return;
             }
+
+            int numAttendees = Integer.parseInt(cNum);
+            if(numAttendees < 2 ){
+                cNumTv.setError("Number of attendees must be greater than 1");
+                return;
+            }
+            if(numAttendees > 200){
+                cNumTv.setError("Number of attendees is limited to 200 attendees only.");
+                return;
+            }
+
             if (chipGroup.getChildCount() == 0) {
                 Toast.makeText(createEvent.this, "Please add at least one event type tag.", Toast.LENGTH_SHORT).show();
                 return;
@@ -170,13 +191,13 @@ public class createEvent extends AppCompatActivity {
 
             //Create event object
             String eventTypes = cEventTypes;
+
             Event event = new Event(userId, null, cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes);
             db.collection("users").document(userId).collection("events")
                     .add(event).addOnSuccessListener(documentReference -> {
                         String eventId = documentReference.getId();
                         Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(createEvent.this, viewEvent.class);
-
                         intent.putExtra("userId", userId);
                         intent.putExtra("eventId", eventId);
                         intent.putExtra("eventName", cEventName);
@@ -194,18 +215,17 @@ public class createEvent extends AppCompatActivity {
                     }).addOnFailureListener(e -> {
                         Toast.makeText(createEvent.this, "Error in creating event.", Toast.LENGTH_SHORT).show();
                     });
-
-        });
-
-        //click listener for generating qr button
-        Button generateQR = findViewById(R.id.genQRBt);
-        generateQR.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(createEvent.this, generatedQRcode.class);
-                startActivity(intent);;
+            //if device is offline, show a message
+            if(!isOnline()){
+                new AlertDialog.Builder(this).setTitle("Offline").setMessage("Your event has been created. You can view and edit your event once you are back online.")
+                        .setPositiveButton("OK", (dialog, which) -> {
+                            finish();
+                        })
+                        .show();
             }
+
         });
+
 
         //click listener for back button
         ImageView BackBt = findViewById(R.id.backImgVw);
@@ -215,7 +235,6 @@ public class createEvent extends AppCompatActivity {
                 finish();
             }
         });
-
         //default color and click listener for the color picker dialog box
         defaultColor = ContextCompat.getColor(createEvent.this, com.google.android.material.R.color.design_default_color_primary);
         colorPickerImg.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +243,7 @@ public class createEvent extends AppCompatActivity {
                 openColorPicker();
             }
         });
+
 
     }
 
@@ -298,7 +318,8 @@ public class createEvent extends AppCompatActivity {
                             chipGroup.removeView(newChip);
                         });
                         chipGroup.addView(newChip);
-                    }else {
+                    }
+                    else {
                         Toast.makeText(this, "Please enter a type", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -307,7 +328,7 @@ public class createEvent extends AppCompatActivity {
                 .show();
     }
 
-    /*private boolean validFormat(String startDate, String startTime, String endDate, String endTime){
+    private boolean validFormat(String startDate, String startTime, String endDate, String endTime){
         SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm a", Locale.getDefault());
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMMM dd, yyyy", Locale.getDefault());
 
@@ -326,6 +347,12 @@ public class createEvent extends AppCompatActivity {
             Toast.makeText(this, "Invalid date or time format. Please double click the space to select.", Toast.LENGTH_SHORT).show();
             return false;
         }
-    }*/
     }
+
+    private boolean isOnline(){
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnected();
+    }
+}
 

@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -19,14 +21,18 @@ public class viewEvent extends AppCompatActivity {
     private String userId, eventId, eventName, startDate, startTime, endDate, endTime, numAttendees, color, eventTags;
     private static final int REQUEST_EDIT_EVENT = 1;
     private FirebaseFirestore db;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.viewevent_layout);
 
+        Button cstmBt = findViewById(R.id.cstmAttendee);
+
         //Initialize Firestore instance
         db = FirebaseFirestore.getInstance();
+        auth = FirebaseAuth.getInstance();
 
         //retrieve data passed through intent
         Intent intent = getIntent();
@@ -62,6 +68,16 @@ public class viewEvent extends AppCompatActivity {
             }
         });
 
+        //click listener for generating qr button
+        Button generateQR = findViewById(R.id.genQRBt);
+        generateQR.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(viewEvent.this, generatedQRcode.class);
+                startActivity(intent);;
+            }
+        });
+
         //set back button with its click listener
         FloatingActionButton backBtn = findViewById(R.id.floatingActionBack);
         backBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +87,17 @@ public class viewEvent extends AppCompatActivity {
                 intent.putExtra("userId", userId);
                 startActivity(intent);
             }
+        });
+
+        cstmBt.setOnClickListener(v ->{
+            String userId = auth.getCurrentUser().getUid();
+
+            Intent vintent = new Intent(this, customAttendeeForm.class);
+
+            vintent.putExtra("userId", userId);
+            vintent.putExtra("eventId", eventId);
+
+            startActivity(vintent);
         });
 
         //display event details

@@ -3201,6 +3201,7 @@ drawable notification_template_icon_low_bg
 drawable notification_tile_bg
 drawable notify_panel_notification_icon_bg
 drawable pen
+drawable pin
 drawable pngegg
 drawable qrsample
 drawable report_icon
@@ -3239,6 +3240,7 @@ id SYM
 id SignUpBtn
 id TOP_END
 id TOP_START
+id TitleTv
 id accelerate
 id accessibility_action_clickable_span
 id accessibility_custom_action_0
@@ -3324,6 +3326,7 @@ id anticipate
 id arc
 id asConfigured
 id async
+id attendee_form
 id auto
 id autoComplete
 id autoCompleteToEnd
@@ -3355,6 +3358,16 @@ id buttonDay
 id buttonMonth
 id buttonPanel
 id buttonWeek
+id cB1
+id cB10
+id cB2
+id cB3
+id cB4
+id cB5
+id cB6
+id cB7
+id cB8
+id cB9
 id cache_measures
 id callMeasure
 id cancelProfileBtn
@@ -3386,6 +3399,7 @@ id companyTv
 id compress
 id confirm_button
 id constraint
+id constraintLayout
 id container
 id content
 id contentPanel
@@ -3397,8 +3411,10 @@ id cos
 id counterclockwise
 id courseTv
 id cradle
+id createBt
 id createEventBtn
 id createEvntBt
+id cstmAttendee
 id currentState
 id custom
 id customPanel
@@ -3481,6 +3497,7 @@ id flip
 id floating
 id floatingActionBack
 id forever
+id formButtons
 id fragment_container_view_tag
 id frameLayout
 id frost
@@ -3522,14 +3539,17 @@ id immediateStop
 id included
 id indeterminate
 id info
+id inputEt
 id instruction_text
 id invisible
 id inward
 id italic
+id itemRv
 id item_touch_helper_previous_elevation
 id joinEventBtn
 id jumpToEnd
 id jumpToStart
+id labelTv
 id labeled
 id layout
 id left
@@ -3541,6 +3561,7 @@ id line3
 id linear
 id linearLayout
 id linearLayout2
+id linearLayout3
 id listMode
 id list_item
 id loginBtn
@@ -3724,6 +3745,7 @@ id search_voice_btn
 id select_dialog_listview
 id selected
 id selection_type
+id setLocationBt
 id settings2
 id sharedValueSet
 id sharedValueUnset
@@ -3792,6 +3814,7 @@ id textSpacerNoTitle
 id textStart
 id textTop
 id textView
+id textView2
 id text_input_end_icon
 id text_input_error_icon
 id text_input_start_icon
@@ -3998,9 +4021,11 @@ layout activity_profile
 layout activity_report
 layout ambilwarna_dialog
 layout ambilwarna_pref_widget
+layout attendee_form
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
 layout createevent_layout
+layout custom_attendee_form
 layout custom_dialog
 layout dashboard
 layout design_bottom_navigation_item
@@ -4085,6 +4110,7 @@ layout notification_template_icon_group
 layout notification_template_part_chronometer
 layout notification_template_part_time
 layout offline_dashboard
+layout questions
 layout register
 layout select_dialog_item_material
 layout select_dialog_multichoice_material

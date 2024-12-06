@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="#2196F3"
+        app:fabCustomSize="35dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.082"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.052"
+        app:maxImageSize="15dp"
+        app:srcCompat="@drawable/back"
+        app:tint="@color/white" />
+
+    <TextView
+        android:id="@+id/TitleTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:fontFamily="@font/lexend_light"
+        android:paddingTop="20dp"
+        android:text="Custom Attendee Form"
+        android:textSize="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/floatingActionBack"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.051" />
+
+    <LinearLayout
+        android:id="@+id/formButtons"
+        android:layout_width="340dp"
+        android:layout_height="521dp"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.422"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitleTv"
+        app:layout_constraintVertical_bias="0.179">
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:fontFamily="@font/lexend_light"
+            android:text="Click on the button to include"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.161"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <CheckBox
+            android:id="@+id/cB1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Full Name" />
+
+        <CheckBox
+            android:id="@+id/cB2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Age" />
+
+        <CheckBox
+            android:id="@+id/cB3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Gender" />
+
+        <CheckBox
+            android:id="@+id/cB4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Date of Birth" />
+
+        <CheckBox
+            android:id="@+id/cB5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Mobile Number" />
+
+        <CheckBox
+            android:id="@+id/cB6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Address" />
+
+        <CheckBox
+            android:id="@+id/cB7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Id Number" />
+
+        <CheckBox
+            android:id="@+id/cB8"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/lexend_light"
+            android:text="Company/Institution" />
+
+        <CheckBox
+            android:id="@+id/cB9"
+            android:layout_width="332dp"
+            android:layout_height="49dp"
+            android:fontFamily="@font/lexend_light"
+            android:text="Email"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="414dp" />
+
+        <CheckBox
+            android:id="@+id/cB10"
+            android:layout_width="330dp"
+            android:layout_height="51dp"
+            android:fontFamily="@font/lexend_light"
+            android:text="Status"
+            tools:layout_editor_absoluteX="41dp"
+            tools:layout_editor_absoluteY="462dp" />
+
+    </LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/createBt"
+        android:layout_width="56dp"
+        android:layout_height="40dp"
+        android:layout_weight="1"
+        android:clickable="true"
+        app:backgroundTint="#2196F3"
+        app:fabCustomSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.887"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/formButtons"
+        app:layout_constraintVertical_bias="0.508"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="#FFFFFF" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
