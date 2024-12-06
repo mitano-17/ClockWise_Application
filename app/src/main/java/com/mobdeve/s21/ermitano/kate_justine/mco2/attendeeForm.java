@@ -2,15 +2,15 @@ package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
 import java.util.ArrayList;
 
-public class AttendeeForm {
+public class attendeeForm {
     private String userId;
     private String eventId;
     private ArrayList<String> fields;
     private String formId;
 
-    public AttendeeForm() {}
+    public attendeeForm() {}
 
-    public AttendeeForm(String userId, String eventId, ArrayList<String> fields, String formId) {
+    public attendeeForm(String userId, String eventId, ArrayList<String> fields, String formId) {
         this.userId = userId;
         this.eventId = eventId;
         this.fields = fields;
