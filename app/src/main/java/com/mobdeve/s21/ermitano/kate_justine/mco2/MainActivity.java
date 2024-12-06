@@ -1,7 +1,9 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -9,7 +11,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -30,6 +34,8 @@ public class MainActivity extends AppCompatActivity {
         // Set to welcome layout as default
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro);
+
+        requestLocationPermissions();
 
         // Initialize Firebase Authentication instance
         auth = FirebaseAuth.getInstance();
@@ -98,4 +104,56 @@ public class MainActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    private void requestLocationPermissions() {
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
+                || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+
+            // Check if rationale should be shown
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
+                    || ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
+                // Show a custom rationale dialog or a Toast
+                showPermissionRationale();
+            } else {
+                // Directly request permissions
+                ActivityCompat.requestPermissions(this,
+                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                        100);
+            }
+        }
+    }
+
+    private void showPermissionRationale() {
+        // Show a dialog to explain why the app needs the permissions
+        new AlertDialog.Builder(this)
+                .setTitle("Location Permissions Required")
+                .setMessage("This app needs location permissions to provide geolocation-based services. Please grant these permissions.")
+                .setPositiveButton("OK", (dialog, which) -> {
+                    // Request the permissions after explaining
+                    ActivityCompat.requestPermissions(MainActivity.this,
+                            new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                            100);
+                })
+                .setNegativeButton("Cancel", (dialog, which) -> {
+                    // Handle when the user denies permission
+                    Toast.makeText(MainActivity.this, "Location permissions are necessary for this feature.", Toast.LENGTH_SHORT).show();
+                })
+                .show();
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+
+        if (requestCode == 100) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                // Permissions granted
+                Toast.makeText(this, "Location permissions granted.", Toast.LENGTH_SHORT).show();
+            } else {
+                // Permissions denied
+                Toast.makeText(this, "Location permissions denied. Some features may not work.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
 }
