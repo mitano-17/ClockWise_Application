@@ -123,55 +123,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
+
     private void requestLocationPermissions() {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 || ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-
-            // Check if rationale should be shown
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_FINE_LOCATION)
-                    || ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {
-                // Show a custom rationale dialog or a Toast
-                showPermissionRationale();
-            } else {
-                // Directly request permissions
-                ActivityCompat.requestPermissions(this,
-                        new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
-                        100);
-            }
+            ActivityCompat.requestPermissions(
+                    this,
+                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
+                    LOCATION_PERMISSION_REQUEST_CODE
+            );
+        } else {
+            startLocationService();
         }
-    }
-
-    private void showPermissionRationale() {
-        // Show a dialog to explain why the app needs the permissions
-        new AlertDialog.Builder(this)
-                .setTitle("Location Permissions Required")
-                .setMessage("This app needs location permissions to provide geolocation-based services. Please grant these permissions.")
-                .setPositiveButton("OK", (dialog, which) -> {
-                    // Request the permissions after explaining
-                    ActivityCompat.requestPermissions(MainActivity.this,
-                            new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION, android.Manifest.permission.ACCESS_BACKGROUND_LOCATION},
-                            100);
-                })
-                .setNegativeButton("Cancel", (dialog, which) -> {
-                    // Handle when the user denies permission
-                    Toast.makeText(MainActivity.this, "Location permissions are necessary for this feature.", Toast.LENGTH_SHORT).show();
-                })
-                .show();
     }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if (requestCode == 100) {
+        if (requestCode == LOCATION_PERMISSION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permissions granted
-                Toast.makeText(this, "Location permissions granted.", Toast.LENGTH_SHORT).show();
+                startLocationService();
             } else {
-                // Permissions denied
-                Toast.makeText(this, "Location permissions denied. Some features may not work.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Location permissions are required for tracking.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void startLocationService() {
+        Intent intent = new Intent(this, location.class);
+        startService(intent);
     }
 
 }
