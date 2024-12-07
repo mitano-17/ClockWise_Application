@@ -37,6 +37,9 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder
         holder.dayTv.setText(currentEvent.getStartDate() + " - " + currentEvent.getEndDate());
         holder.timeTv.setText(currentEvent.getStartTime() + " - " + currentEvent.getEndTime());
 
+        String color = currentEvent.getColor();
+        holder.itemView.setBackgroundColor(Color.parseColor(color));
+
         // Add click listener for each event
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
