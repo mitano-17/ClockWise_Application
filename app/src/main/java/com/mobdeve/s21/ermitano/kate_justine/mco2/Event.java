@@ -16,11 +16,11 @@ public class Event {
     private String color;
     private String receiveAlert;
     private String eventType;
-    //private List<String> attendeeFormFields;
+    private String eventLoc;
 
     public Event() {}
 
-    public Event(String userId, String eventId, String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType,  String qrCodeData) {
+    public Event(String userId, String eventId, String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType,  String qrCodeData, String eventLoc) {
         this.userId = userId;
         this.eventId = eventId;
         this.eventName = eventName;
@@ -32,7 +32,7 @@ public class Event {
         this.color = color;
         this.receiveAlert = receiveAlert;
         this.eventType = eventType;
-        //this.attendeeFormFields = attendeeFormFields;
+        this.eventLoc = eventLoc;
     }
 
     public String getUserId(){ return userId; }
@@ -46,7 +46,7 @@ public class Event {
     public String getColor () { return color; }
     public String getReceiveAlert() { return receiveAlert; }
     public String getEventType() { return eventType; }
-    //public List<String> getAttendeeFormFields() { return attendeeFormFields; }
+    public String getEventLoc(){ return  eventLoc ;}
 
     public void setEventId(String eventId) {
         this.eventId = eventId;

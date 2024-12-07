@@ -10,7 +10,7 @@
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="414dp"
-        android:layout_height="599dp"
+        android:layout_height="654dp"
         android:layout_marginTop="32dp"
         android:background="#F2F2F2"
         android:backgroundTint="#00FFFFFF"
@@ -105,8 +105,8 @@
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
                     android:hint="Select Date"
-                    android:textSize="14sp"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/startTimeTv"
@@ -117,8 +117,8 @@
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
                     android:hint="0:00"
-                    android:textSize="14sp"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -151,8 +151,8 @@
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
                     android:hint="Select Date"
-                    android:textSize="14sp"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:textSize="14sp" />
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/endTimeTv"
@@ -163,8 +163,8 @@
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
                     android:hint="0:00"
-                    android:textSize="14sp"
-                    android:paddingStart="8dp"/>
+                    android:paddingStart="8dp"
+                    android:textSize="14sp" />
             </LinearLayout>
         </LinearLayout>
 
@@ -193,8 +193,8 @@
                 android:backgroundTint="#EEE9F0"
                 android:fontFamily="@font/lexend_medium"
                 android:hint="e.g. 5"
-                android:textSize="14sp"
-                android:paddingStart="8dp"/>
+                android:paddingStart="8dp"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -223,8 +223,8 @@
                 android:backgroundTint="#EEE9F0"
                 android:fontFamily="@font/lexend_medium"
                 android:hint="Main St"
-                android:textSize="14sp"
-                android:paddingStart="8dp"/>
+                android:paddingStart="8dp"
+                android:textSize="14sp" />
 
         </LinearLayout>
 
@@ -317,7 +317,7 @@
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="126dp">
+            android:layout_height="146dp">
 
             <TextView
                 android:id="@+id/receiveAlertTv"
@@ -335,6 +335,15 @@
                 android:layout_marginStart="45dp"
                 android:fontFamily="@font/lexend_light"
                 android:text="1 hour before event"
+                android:textSize="12sp" />
+
+            <RadioButton
+                android:id="@+id/radioButton2"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_marginStart="45dp"
+                android:fontFamily="@font/lexend_light"
+                android:text="1 day before event"
                 android:textSize="12sp" />
 
             <RadioButton

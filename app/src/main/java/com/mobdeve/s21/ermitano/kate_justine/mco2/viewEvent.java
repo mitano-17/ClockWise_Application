@@ -6,17 +6,15 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 public class viewEvent extends AppCompatActivity {
-    private String userId, eventId, eventName, startDate, startTime, endDate, endTime, numAttendees, color, eventTags, qrCodeData;
+    private String userId, eventId, eventName, startDate, startTime, endDate, endTime, numAttendees, color, eventTags, qrCodeData, eventLoc;
     private static final int REQUEST_EDIT_EVENT = 1;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -40,6 +38,7 @@ public class viewEvent extends AppCompatActivity {
         endDate = intent.getStringExtra("endDate");
         endTime = intent.getStringExtra("endTime");
         numAttendees = intent.getStringExtra("numAttendees");
+        eventLoc = intent.getStringExtra("eventLoc");
         color = intent.getStringExtra("color");
         eventTags = intent.getStringExtra("eventType");
 
@@ -82,6 +81,7 @@ public class viewEvent extends AppCompatActivity {
             editIntent.putExtra("endDate", endDate);
             editIntent.putExtra("endTime", endTime);
             editIntent.putExtra("numAttendees", numAttendees);
+            editIntent.putExtra("eventLoc", eventLoc);
             editIntent.putExtra("color", color);
             editIntent.putExtra("eventType", eventTags);
             startActivityForResult(editIntent, REQUEST_EDIT_EVENT);
@@ -117,6 +117,7 @@ public class viewEvent extends AppCompatActivity {
             endDate = data.getStringExtra("endDate");
             endTime = data.getStringExtra("endTime");
             numAttendees = data.getStringExtra("numAttendees");
+            eventLoc = data.getStringExtra("eventLoc");
             color = data.getStringExtra("color");
             eventTags = data.getStringExtra("eventType");
 

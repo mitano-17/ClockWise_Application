@@ -61,6 +61,7 @@ public class createEvent extends AppCompatActivity {
         EditText cEndDateTv= findViewById(R.id.endDateTv);
         EditText cEndTimeTv= findViewById(R.id.endTimeTv);
         EditText cNumTv = findViewById(R.id.NumTv);
+        EditText cEventLocTv = findViewById(R.id.AddressTv);
         ChipGroup chipGroup = findViewById(R.id.chipGroup);
         ImageView addIcon = findViewById(R.id.addIcon);
         ImageView colorPickerImg = findViewById(R.id.colorPicker);
@@ -85,6 +86,7 @@ public class createEvent extends AppCompatActivity {
             String cEndDate = cEndDateTv.getText().toString().trim();
             String cEndTime = cEndTimeTv.getText().toString().trim();
             String cNum = cNumTv.getText().toString().trim();
+            String cEventLoc = cEventLocTv.getText().toString().trim();
             String cColor = String.format("#%06X", (0xFFFFFF & defaultColor));
 
             //retrieve selected radio button text
@@ -163,6 +165,10 @@ public class createEvent extends AppCompatActivity {
                 cNumTv.setError("Please indicate the number of attendees.");
                 return;
             }
+            if(cEventLoc.isEmpty()){
+                cEventLocTv.setError("Please indicate the number of attendees.");
+                return;
+            }
 
             int numAttendees = Integer.parseInt(cNum);
             if(numAttendees < 2 ){
@@ -191,7 +197,7 @@ public class createEvent extends AppCompatActivity {
             String eventTypes = cEventTypes;
             String qrCodeData = "";
 
-            Event event = new Event(userId, null, cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes, qrCodeData);
+            Event event = new Event(userId, null, cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes, qrCodeData, cEventLoc);
             db.collection("users").document(userId).collection("events")
                     .add(event).addOnSuccessListener(documentReference -> {
                         Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
@@ -204,6 +210,7 @@ public class createEvent extends AppCompatActivity {
                         intent.putExtra("endDate", cEndDate);
                         intent.putExtra("endTime", cEndTime);
                         intent.putExtra("numAttendees", cNum);
+                        intent.putExtra("eventLoc", cEventLoc);
                         intent.putExtra("color", cColor);
                         intent.putExtra("receiveAlert", selectedOption);
                         intent.putExtra("eventType", eventTypes);

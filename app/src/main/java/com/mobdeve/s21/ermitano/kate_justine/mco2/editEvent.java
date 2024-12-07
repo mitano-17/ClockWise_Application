@@ -1,12 +1,9 @@
 package com.mobdeve.s21.ermitano.kate_justine.mco2;
 
 import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RadioButton;
@@ -37,10 +34,10 @@ import yuku.ambilwarna.AmbilWarnaDialog;
 
 public class editEvent extends AppCompatActivity {
 
-    private EditText eEventTitleTv, eStartDateTv, eStartTimeTv, eEndDateTv, eEndTimeTv, eNumAttendees, eColor, eReceiveAlert, eEventType;
+    private EditText eEventTitleTv, eStartDateTv, eStartTimeTv, eEndDateTv, eEndTimeTv, eNumAttendees, eColor, eReceiveAlert, eEventType, eEventLoc;
     private ChipGroup chipGroup;
     private ImageView addIcon, colorPickerImg;
-    private String userId, eventId, eventName, eventType, startDate, startTime, endDate, endTime, numAttendees, color, receiveAlert;
+    private String userId, eventId, eventName, eventType, startDate, startTime, endDate, endTime, numAttendees, color, receiveAlert, eventLoc;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
     private RadioButton bt1, bt2,bt3;
@@ -64,6 +61,7 @@ public class editEvent extends AppCompatActivity {
         endDate = intent.getStringExtra("endDate");
         endTime = intent.getStringExtra("endTime");
         numAttendees = intent.getStringExtra("numAttendees");
+        eventLoc = intent.getStringExtra("eventLoc");
         eventType = intent.getStringExtra("eventType");
         receiveAlert = intent.getStringExtra("receiveAlert");
         color = intent.getStringExtra("color");
@@ -74,6 +72,7 @@ public class editEvent extends AppCompatActivity {
         eEndDateTv = findViewById(R.id.endDateTv);
         eEndTimeTv = findViewById(R.id.endTimeTv);
         eNumAttendees = findViewById(R.id.NumTv);
+        eEventLoc = findViewById(R.id.AddressTv);
         chipGroup = findViewById(R.id.chipGroup);
         addIcon = findViewById(R.id.addIcon);
         colorPickerImg = findViewById(R.id.imageView2);
@@ -127,6 +126,7 @@ public class editEvent extends AppCompatActivity {
                         eEndDateTv.setText(endDate);
                         eEndTimeTv.setText(endTime);
                         eNumAttendees.setText(numAttendees);
+                        eEventLoc.setText(eventLoc);
                         receiveAlert =document.getString("receiveAlert");
                         color = document.getString("color");
                         if (color != null) {
@@ -165,6 +165,7 @@ public class editEvent extends AppCompatActivity {
         String upEndDate = eEndDateTv.getText().toString();
         String upEndTime = eEndTimeTv.getText().toString();
         String upNumAttendees = eNumAttendees.getText().toString();
+        String upEventLoc = eEventLoc.getText().toString();
         String upColor = String.format("#%06X", (0xFFFFFF & defaultColor));
 
         //For collecting event types
@@ -177,7 +178,7 @@ public class editEvent extends AppCompatActivity {
 
         // Input validation
         if (upEventTitle.isEmpty() || upStartDate.isEmpty() || upStartTime.isEmpty() ||
-                upEndDate.isEmpty() || upEndTime.isEmpty() || upNumAttendees.isEmpty()) {
+                upEndDate.isEmpty() || upEndTime.isEmpty() || upNumAttendees.isEmpty() || upEventLoc.isEmpty()) {
             Toast.makeText(editEvent.this, "Please fill in all fields.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -228,7 +229,7 @@ public class editEvent extends AppCompatActivity {
             Toast.makeText(this, "Event ID or User ID is missing.", Toast.LENGTH_SHORT).show();
             return;
         }
-        if (selectedRadioButtonId == -1) {
+        if (selectedRadioButtonId > 1) {
             Toast.makeText(editEvent.this, "Please select only one alert option.", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -242,6 +243,7 @@ public class editEvent extends AppCompatActivity {
         updatedEvent.put("endDate", upEndDate);
         updatedEvent.put("endTime", upEndTime);
         updatedEvent.put("numAttendees", upNumAttendees);
+        updatedEvent.put("eventLoc", upEventLoc);
         updatedEvent.put("color", upColor);
         updatedEvent.put("eventType", upEventTypes);
 
@@ -256,6 +258,7 @@ public class editEvent extends AppCompatActivity {
                     result.putExtra("startTime", upStartTime);
                     result.putExtra("endDate", upEndDate);
                     result.putExtra("numAttendees", upNumAttendees);
+                    result.putExtra("eventLoc", upEventLoc);
                     result.putExtra("endTime", upEndTime);
                     result.putExtra("color", upColor);
                     result.putExtra("eventType", upEventTypes);

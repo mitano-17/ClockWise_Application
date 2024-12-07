@@ -24,6 +24,7 @@ public class customAttendeeForm extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.custom_attendee_form);
 
+        //initialize database
         db = FirebaseFirestore.getInstance();
 
         eventId = getIntent().getStringExtra("eventId");
@@ -53,7 +54,7 @@ public class customAttendeeForm extends AppCompatActivity {
             }
 
             attendeeForm attendeeForm = new attendeeForm(userId, eventId, selectedFields, null);
-
+        //add the created form fields to db
             db.collection("users").document(userId).collection("events").document(eventId)
                     .collection("attendeeForm").document("formId").get()
                     .addOnSuccessListener(documentSnapshot -> {
@@ -83,7 +84,7 @@ public class customAttendeeForm extends AppCompatActivity {
 
         backBt.setOnClickListener(v -> finish());
     }
-
+//to update the form
     private void updateAttendeeForm() {
         db.collection("users").document(userId).collection("events").document(eventId)
                 .update("selectedFields", selectedFields)

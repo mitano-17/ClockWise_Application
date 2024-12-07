@@ -45,7 +45,7 @@ public class viewAttendeeForm extends AppCompatActivity {
         backBt.setOnClickListener(v -> finish());
 
     }
-
+//to load the attendee form
     private void loadAttendeeForm() {
         db.collection("users").document(userId).collection("events").document(eventId).get()
                 .addOnSuccessListener(documentSnapshot -> {
