@@ -46,11 +46,13 @@ drawable user
 font lexend
 font lexend_light
 font lexend_medium
+id AddressTv
 id EventTitleInput
 id EventTitleTv
 id EventsRv
 id EventsTv
 id Iconc
+id LocationTv
 id NumAttendeesTv
 id NumTv
 id QRcodeIv
@@ -65,9 +67,6 @@ id backImg4
 id backImgVw
 id btnEditProfile
 id btnLogout
-id buttonDay
-id buttonMonth
-id buttonWeek
 id cB1
 id cB10
 id cB2
@@ -114,8 +113,6 @@ id fullNameEt
 id fullNameTv
 id genQRBt
 id greetingTv
-id hourIcon
-id hourLabel
 id imageButton
 id imageGreetIv
 id imageView2
@@ -124,10 +121,13 @@ id inputEt
 id instruction_text
 id itemRv
 id joinEventBtn
+id joinIcon
+id joinedLabel
 id labelTv
 id linearLayout
 id linearLayout2
 id linearLayout3
+id linearLayout4
 id loginBtn
 id logoIv
 id logoText
@@ -142,6 +142,7 @@ id noteTv
 id passwordEt
 id passwordTv
 id presentTv
+id profile_company
 id profile_edit_icon
 id profile_email
 id profile_name
@@ -176,7 +177,7 @@ id titleTv
 id toolBarTopLL
 id toolbar
 id totalEvents
-id totalHours
+id totalJoined
 id trashBt
 id tv_event_creator
 id tv_event_date_time

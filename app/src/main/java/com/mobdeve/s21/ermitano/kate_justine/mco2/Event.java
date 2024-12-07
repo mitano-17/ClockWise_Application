@@ -20,7 +20,7 @@ public class Event {
 
     public Event() {}
 
-    public Event(String userId, String eventId, String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType) {
+    public Event(String userId, String eventId, String eventName, String startDate, String startTime, String endDate, String endTime, String numAttendees, String color, String receiveAlert, String eventType,  String qrCodeData) {
         this.userId = userId;
         this.eventId = eventId;
         this.eventName = eventName;

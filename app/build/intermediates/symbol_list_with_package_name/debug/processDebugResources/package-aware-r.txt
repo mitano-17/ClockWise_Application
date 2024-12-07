@@ -3218,6 +3218,7 @@ font lexend
 font lexend_light
 font lexend_medium
 id ALT
+id AddressTv
 id BOTTOM_END
 id BOTTOM_START
 id CTRL
@@ -3227,6 +3228,7 @@ id EventsRv
 id EventsTv
 id FUNCTION
 id Iconc
+id LocationTv
 id META
 id NO_DEBUG
 id NumAttendeesTv
@@ -3354,10 +3356,7 @@ id browser_actions_menu_items
 id browser_actions_menu_view
 id btnEditProfile
 id btnLogout
-id buttonDay
-id buttonMonth
 id buttonPanel
-id buttonWeek
 id cB1
 id cB10
 id cB2
@@ -3522,8 +3521,6 @@ id home
 id homeAsUp
 id honorRequest
 id horizontal_only
-id hourIcon
-id hourLabel
 id icon
 id icon_group
 id icon_only
@@ -3547,6 +3544,8 @@ id italic
 id itemRv
 id item_touch_helper_previous_elevation
 id joinEventBtn
+id joinIcon
+id joinedLabel
 id jumpToEnd
 id jumpToStart
 id labelTv
@@ -3562,6 +3561,7 @@ id linear
 id linearLayout
 id linearLayout2
 id linearLayout3
+id linearLayout4
 id listMode
 id list_item
 id loginBtn
@@ -3691,6 +3691,7 @@ id position
 id postLayout
 id presentTv
 id pressed
+id profile_company
 id profile_edit_icon
 id profile_email
 id profile_name
@@ -3836,7 +3837,7 @@ id toolbar
 id top
 id topPanel
 id totalEvents
-id totalHours
+id totalJoined
 id touch_outside
 id transitionToEnd
 id transitionToStart

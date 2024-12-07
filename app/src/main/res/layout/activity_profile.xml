@@ -76,6 +76,17 @@
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/profile_company"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/lexend_light"
+        android:gravity="center|top"
+        android:paddingBottom="0dp"
+        android:text="DLSU"
+        android:textSize="16sp" />
+
+    <TextView
         android:id="@+id/profile_email"
         android:layout_width="wrap_content"
         android:layout_height="43dp"

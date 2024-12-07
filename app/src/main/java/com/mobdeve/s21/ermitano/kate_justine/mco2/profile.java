@@ -27,7 +27,7 @@ public class profile extends AppCompatActivity {
 
     // UI elements
     private ImageView profilePicture, backButton, profileEditIcon;
-    private TextView profileName, profileEmail, report, logoutText;
+    private TextView profileName, profileEmail, report, logoutText, profileCompany;
     private Button editProfileBtn;
 
     // Firebase instances
@@ -51,6 +51,7 @@ public class profile extends AppCompatActivity {
         profileEditIcon = findViewById(R.id.profile_edit_icon);
         profileName = findViewById(R.id.profile_name);
         profileEmail = findViewById(R.id.profile_email);
+        profileCompany = findViewById(R.id.profile_company);
         report = findViewById(R.id.report);
         logoutText = findViewById(R.id.logout);
         editProfileBtn = findViewById(R.id.btnEditProfile);
@@ -110,9 +111,11 @@ public class profile extends AppCompatActivity {
                             String fullName = document.getString("fullName");
                             String email = document.getString("email");
                             String profilePicUrl = document.getString("profilePic");
+                            String company = document.getString("company");
 
                             profileName.setText(fullName);
                             profileEmail.setText(email);
+                            profileCompany.setText(company);
 
                             Glide.with(profile.this)
                                     .load(profilePicUrl != null ? profilePicUrl : R.drawable.default_profile)
