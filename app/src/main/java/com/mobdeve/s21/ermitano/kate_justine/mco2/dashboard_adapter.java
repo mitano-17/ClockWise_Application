@@ -10,7 +10,6 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder> {
@@ -19,7 +18,7 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder
 
     public dashboard_adapter(Context context, List<Event> eventList) {
         this.context = context;
-        this.eventList = eventList != null ? eventList : new ArrayList<>();
+        this.eventList = eventList;
     }
 
     @NonNull
@@ -32,28 +31,26 @@ public class dashboard_adapter extends RecyclerView.Adapter<dashboard_viewholder
     public void onBindViewHolder(@NonNull dashboard_viewholder holder, int position) {
         Event currentEvent = eventList.get(position);
 
-        // Bind data to the views
+        // Bind event data
         holder.courseTv.setText(currentEvent.getEventName());
         holder.dayTv.setText(currentEvent.getStartDate() + " - " + currentEvent.getEndDate());
         holder.timeTv.setText(currentEvent.getStartTime() + " - " + currentEvent.getEndTime());
+        holder.itemView.setBackgroundColor(Color.parseColor(currentEvent.getColor()));
 
-        String color = currentEvent.getColor();
-        holder.itemView.setBackgroundColor(Color.parseColor(color));
-
-        // Add click listener for each event
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Example: Navigate to an event detail activity
-                Intent intent = new Intent(context, attendance.class);
-                intent.putExtra("eventName", currentEvent.getEventName());
-                intent.putExtra("startDate", currentEvent.getStartDate());
-                intent.putExtra("startTime", currentEvent.getStartTime());
-                intent.putExtra("endDate", currentEvent.getEndDate());
-                intent.putExtra("endTime", currentEvent.getEndTime());
-                intent.putExtra("numAttendees", currentEvent.getNumAttendees());
-                context.startActivity(intent);
-            }
+        // Click listener to navigate to viewEvent
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, viewEvent.class);
+            intent.putExtra("eventId", currentEvent.getEventId());
+            intent.putExtra("eventName", currentEvent.getEventName());
+            intent.putExtra("startDate", currentEvent.getStartDate());
+            intent.putExtra("startTime", currentEvent.getStartTime());
+            intent.putExtra("endDate", currentEvent.getEndDate());
+            intent.putExtra("endTime", currentEvent.getEndTime());
+            intent.putExtra("numAttendees", String.valueOf(currentEvent.getNumAttendees()));
+            intent.putExtra("color", currentEvent.getColor());
+            intent.putExtra("eventType", currentEvent.getEventType());
+            intent.putExtra("userId", currentEvent.getUserId());
+            context.startActivity(intent);
         });
     }
 
