@@ -32,6 +32,7 @@ import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Date;
+import java.util.Random;
 import java.util.Set;
 
 import yuku.ambilwarna.AmbilWarnaDialog;
@@ -72,9 +73,6 @@ public class createEvent extends AppCompatActivity {
         cStartTimeTv.setOnClickListener(view -> timePicker(cStartTimeTv));
         cEndTimeTv.setOnClickListener(view -> timePicker(cEndTimeTv));
         addIcon.setOnClickListener(view -> showEventTypeDialog(chipGroup));
-
-
-       Button setLocBt = findViewById(R.id.setLocationBt);
 
         //click listener for creating the event
         createEventBt.setOnClickListener(view -> {
@@ -191,15 +189,15 @@ public class createEvent extends AppCompatActivity {
 
             //Create event object
             String eventTypes = cEventTypes;
+            String qrCodeData = "";
 
-            Event event = new Event(userId, null, cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes);
+            Event event = new Event(userId, null, cEventName, cStartDate, cStartTime, cEndDate, cEndTime, cNum, cColor, selectedOption, cEventTypes, qrCodeData);
             db.collection("users").document(userId).collection("events")
                     .add(event).addOnSuccessListener(documentReference -> {
-                        String eventId = documentReference.getId();
                         Toast.makeText(createEvent.this, "Event created successfully.", Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(createEvent.this, viewEvent.class);
                         intent.putExtra("userId", userId);
-                        intent.putExtra("eventId", eventId);
+                        intent.putExtra("eventId", documentReference.getId());
                         intent.putExtra("eventName", cEventName);
                         intent.putExtra("startDate", cStartDate);
                         intent.putExtra("startTime", cStartTime);
@@ -209,6 +207,7 @@ public class createEvent extends AppCompatActivity {
                         intent.putExtra("color", cColor);
                         intent.putExtra("receiveAlert", selectedOption);
                         intent.putExtra("eventType", eventTypes);
+                        intent.putExtra("qrCodeData", qrCodeData);
 
                         startActivity(intent);
 
@@ -355,4 +354,3 @@ public class createEvent extends AppCompatActivity {
         return networkInfo != null && networkInfo.isConnected();
     }
 }
-
