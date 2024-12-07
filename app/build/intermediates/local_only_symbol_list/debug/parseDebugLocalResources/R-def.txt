@@ -161,7 +161,6 @@ id report
 id reportbtn
 id saveBt
 id saveProfileBtn
-id setLocationBt
 id settings2
 id signUpBtn
 id startDateTv
