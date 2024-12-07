@@ -30,23 +30,29 @@ public class joinEventqr extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         IntentResult intentResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
-        if(intentResult != null){
-           if(intentResult.getContents() != null){
-               String scannedData = intentResult.getContents();
-               Toast.makeText(this, "QR code Scanned.", Toast.LENGTH_SHORT).show();
-               //passes the scannedQr to enter the event
-               Intent intent = new Intent(joinEventqr.this, enterEventqr.class);
-               intent.putExtra("scannedData", scannedData);
-               startActivity(intent);
-               finish();
-           }else{
-               //redirects back to dashboard when no QR code is scanned and when the back button is clicked
-               Toast.makeText(this, "No QR code scanned.", Toast.LENGTH_SHORT).show();
-               finish();
-           }
-        }else{
+
+        if (intentResult != null) {
+            if (intentResult.getContents() != null) {
+                String scannedData = intentResult.getContents();
+                Toast.makeText(this, "QR code Scanned.", Toast.LENGTH_SHORT).show();
+
+                // Assume the scanned QR code contains the event name or event ID, depending on how it's encoded
+                // For example, let's assume the QR code contains the event name:
+                String eventName = scannedData;  // Adjust based on how your QR data is encoded
+
+                // Pass the event name to the enterEventqr activity
+                Intent intent = new Intent(joinEventqr.this, enterEventqr.class);
+                intent.putExtra("eventName", eventName);  // Pass the event name
+                startActivity(intent);
+                finish();  // Optionally close the current activity
+            } else {
+                // Handle case when no QR code was scanned
+                Toast.makeText(this, "No QR code scanned.", Toast.LENGTH_SHORT).show();
+                finish();  // Close the activity if no QR code
+            }
+        } else {
             super.onActivityResult(requestCode, resultCode, data);
         }
     }
