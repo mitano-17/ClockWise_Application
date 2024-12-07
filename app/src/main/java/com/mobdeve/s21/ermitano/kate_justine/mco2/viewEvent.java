@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 
 public class viewEvent extends AppCompatActivity {
-    private String userId, eventId, eventName, startDate, startTime, endDate, endTime, numAttendees, color, eventTags;
+    private String userId, eventId, eventName, startDate, startTime, endDate, endTime, numAttendees, color, eventTags, qrCodeData;
     private static final int REQUEST_EDIT_EVENT = 1;
     private FirebaseFirestore db;
     private FirebaseAuth auth;
@@ -46,6 +46,7 @@ public class viewEvent extends AppCompatActivity {
         numAttendees = intent.getStringExtra("numAttendees");
         color = intent.getStringExtra("color");
         eventTags = intent.getStringExtra("eventType");
+        qrCodeData = intent.getStringExtra("qrCodeData");
 
         //set editEvent with its click listener
         FloatingActionButton editEventBt = findViewById(R.id.editBtn);
@@ -74,6 +75,7 @@ public class viewEvent extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(viewEvent.this, generatedQRcode.class);
+                intent.putExtra("eventId", eventId);
                 startActivity(intent);;
             }
         });
