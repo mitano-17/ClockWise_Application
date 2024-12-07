@@ -22,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class generatedQRcode extends AppCompatActivity {
+    private Bitmap qrBitmap = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,11 +31,17 @@ public class generatedQRcode extends AppCompatActivity {
         ImageView qrCodeImageView = findViewById(R.id.QRcodeIv);
         Button downloadButton = findViewById(R.id.downloadBtn);
 
-        // Generate a random QR code
-        String randomData = "UniqueData-" + System.currentTimeMillis(); // Random unique data
-        Bitmap qrBitmap = generateQRCode(randomData);
-        if (qrBitmap != null) {
-            qrCodeImageView.setImageBitmap(qrBitmap);
+        // Retrieve event details passed via Intent
+        Intent intent = getIntent();
+        String eventId = intent.getStringExtra("eventId");
+        String userId = intent.getStringExtra("userId");
+
+        if (eventId != null) {
+            // Use the eventId to generate the QR code
+            qrBitmap = generateQRCode(eventId);
+            if (qrBitmap != null) {
+                qrCodeImageView.setImageBitmap(qrBitmap);
+            }
         }
 
         // Download the QR code as an image
