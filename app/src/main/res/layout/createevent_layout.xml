@@ -15,9 +15,10 @@
         android:background="#F2F2F2"
         android:backgroundTint="#00FFFFFF"
         android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="-4dp">
+        tools:ignore="MissingConstraints">
 
         <LinearLayout
             android:layout_width="379dp"
@@ -104,7 +105,8 @@
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
                     android:hint="Select Date"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:paddingStart="8dp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/startTimeTv"
@@ -114,8 +116,9 @@
                     android:background="#F4EFEF"
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
-                    android:hint="Select Time"
-                    android:textSize="14sp" />
+                    android:hint="0:00"
+                    android:textSize="14sp"
+                    android:paddingStart="8dp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -148,7 +151,8 @@
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
                     android:hint="Select Date"
-                    android:textSize="14sp" />
+                    android:textSize="14sp"
+                    android:paddingStart="8dp"/>
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/endTimeTv"
@@ -158,8 +162,9 @@
                     android:background="#F4EFEF"
                     android:backgroundTint="#EEE9F0"
                     android:fontFamily="@font/lexend_medium"
-                    android:hint="Select Time"
-                    android:textSize="14sp" />
+                    android:hint="0:00"
+                    android:textSize="14sp"
+                    android:paddingStart="8dp"/>
             </LinearLayout>
         </LinearLayout>
 
@@ -187,8 +192,39 @@
                 android:background="#F4EFEF"
                 android:backgroundTint="#EEE9F0"
                 android:fontFamily="@font/lexend_medium"
-                android:hint=" #"
+                android:hint="e.g. 5"
+                android:textSize="14sp"
+                android:paddingStart="8dp"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="378dp"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingStart="45dp"
+            android:paddingTop="10dp">
+
+            <TextView
+                android:id="@+id/LocationTv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/lexend_medium"
+                android:text="Location"
                 android:textSize="14sp" />
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/AddressTv"
+                android:layout_width="200dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="10dp"
+                android:background="#F4EFEF"
+                android:backgroundTint="#EEE9F0"
+                android:fontFamily="@font/lexend_medium"
+                android:hint="Main St"
+                android:textSize="14sp"
+                android:paddingStart="8dp"/>
 
         </LinearLayout>
 
@@ -222,6 +258,7 @@
         <LinearLayout
             android:layout_width="378dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical"
             android:paddingStart="45dp"
             android:paddingTop="15dp">
@@ -275,20 +312,18 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
         </LinearLayout>
 
         <RadioGroup
             android:id="@+id/radioGroup"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="126dp">
 
             <TextView
                 android:id="@+id/receiveAlertTv"
                 android:layout_width="match_parent"
-                android:layout_height="29dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="45dp"
-                android:layout_weight="1"
                 android:fontFamily="@font/lexend_medium"
                 android:text="Receive Alert"
                 android:textSize="14sp" />
@@ -303,15 +338,6 @@
                 android:textSize="12sp" />
 
             <RadioButton
-                android:id="@+id/radioButton2"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginStart="45dp"
-                android:fontFamily="@font/lexend_light"
-                android:text="1 day before event"
-                android:textSize="12sp" />
-
-            <RadioButton
                 android:id="@+id/radioButton3"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
@@ -319,40 +345,25 @@
                 android:fontFamily="@font/lexend_light"
                 android:text="Never"
                 android:textSize="12sp" />
-        </RadioGroup>
 
+
+        </RadioGroup>
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/createEvntBt"
         android:layout_width="56dp"
         android:layout_height="40dp"
-        android:layout_marginTop="12dp"
         android:layout_weight="1"
         android:clickable="true"
         app:backgroundTint="#2196F3"
         app:fabCustomSize="40dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.884"
+        app:layout_constraintHorizontal_bias="0.914"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout3"
         app:srcCompat="@android:drawable/ic_input_add"
         app:tint="#FFFFFF" />
-
-    <Button
-        android:id="@+id/setLocationBt"
-        android:layout_width="139dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="12dp"
-        android:layout_weight="1"
-        android:backgroundTint="#ABA8AB"
-        android:fontFamily="@font/lexend_medium"
-        android:text="Set Location"
-        android:textColor="#FFFFFF"
-        android:textSize="12sp"
-        app:layout_constraintEnd_toStartOf="@+id/createEvntBt"
-        app:layout_constraintHorizontal_bias="0.205"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
