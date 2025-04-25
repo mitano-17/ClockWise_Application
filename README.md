@@ -1,5 +1,5 @@
 # ClockWise_Application
-ClockWise is an attendance tracking application that features seamless event management and accurate real-time data tracking for attendees. It offers various check-in options such as QR code scanning and geolocation verification, providing flexibility for a wide range of events. With ClockWise, Event Makers can efficiently manage and track attendance effortlessly while ensuring a smooth experience for participants.
+**ClockWise** is an attendance tracking application that features seamless event management and accurate real-time data tracking for attendees. It offers various check-in options such as QR code scanning and geolocation verification, providing flexibility for a wide range of events. With ClockWise, Event Makers can efficiently manage and track attendance effortlessly while ensuring a smooth experience for participants.
 
 ## Service and APIs
 ● Geolocation Maps (Google Play Services Location API):
